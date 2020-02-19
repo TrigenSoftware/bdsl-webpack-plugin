@@ -1,0 +1,21 @@
+{
+  "generator-trigen-lib": {
+    "editPackage": true,
+    "pkg": {
+      "name": "bdsl-webpack-plugin",
+      "version": "1.0.0-beta",
+      "description": "Browserslist Differential Script Loading webpack plugin.",
+      "repository": "https://github.com/TrigenSoftware/bdsl-webpack-plugin",
+      "author": "dangreen"
+    },
+    "type": "node",
+    "lang": "babel",
+    "rollup": true,
+    "jest": true,
+    "coverage": false,
+    "publishAsRoot": false,
+    "cleanPublish": true,
+    "checkSize": true,
+    "gitInit": true
+  }
+}

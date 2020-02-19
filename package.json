@@ -1,0 +1,57 @@
+{
+  "name": "bdsl-webpack-plugin",
+  "version": "1.0.0-beta",
+  "description": "Browserslist Differential Script Loading webpack plugin.",
+  "author": "dangreen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TrigenSoftware/bdsl-webpack-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/TrigenSoftware/bdsl-webpack-plugin/issues"
+  },
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "lint": "trigen-scripts lint",
+    "jest": "trigen-scripts jest",
+    "checkSize": "trigen-scripts checkSize",
+    "test": "trigen-scripts test",
+    "start": "trigen-scripts start",
+    "build:testBundle": "NODE_ENV=test babel-node test/buildTestBundle",
+    "build": "trigen-scripts build",
+    "cleanPublish": "trigen-scripts cleanPublish"
+  },
+  "keywords": [],
+  "peerDependencies": {
+    "html-webpack-plugin": "^3.0.0",
+    "webpack": "^4.0.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.2.0",
+    "browserslist": "^4.8.7",
+    "browserslist-useragent-regexp": "^2.0.1",
+    "core-js": "3"
+  },
+  "devDependencies": {
+    "@trigen/scripts": "4",
+    "@trigen/scripts-plugin-babel": "4",
+    "@trigen/scripts-plugin-eslint": "4",
+    "@trigen/scripts-plugin-jest": "4",
+    "@trigen/scripts-plugin-rollup": "4",
+    "@trigen/scripts-plugin-size-limit": "4",
+    "@trigen/scripts-preset-lib": "4",
+    "babel-loader": "^8.0.6",
+    "eslint-plugin-jest": "^23.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "memory-fs": "^0.5.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "webpack": "^4.41.6"
+  },
+  "files": [
+    "lib"
+  ]
+}
