@@ -77,7 +77,7 @@ export function getBrowserslistConfig({
 }
 
 /**
- * Get Browserslist config's environments.
+ * Get Browserslist config's environments, ignoring `defaults` env.
  * @param  {object}   [options] - Browserslist options.
  * @param  {string}   [options.config] - Path to config.
  * @param  {string}   [options.path] - Path to config directory.
