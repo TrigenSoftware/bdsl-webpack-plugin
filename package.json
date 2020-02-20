@@ -27,9 +27,7 @@
   },
   "keywords": [
     "browserslist",
-    "differential",
-    "script",
-    "loading",
+    "differential-script-loading",
     "browserslist-useragent-regexp",
     "useragent",
     "webpack",
