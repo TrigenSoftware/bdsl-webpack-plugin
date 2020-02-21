@@ -26,7 +26,7 @@
 
 A webpack plugin to automate the generation of differential script loading. It uses [browserslist](https://github.com/browserslist/browserslist) and [browserslist-useragent-regexp](https://github.com/browserslist/browserslist-useragent-regexp).
 
-1) Create `.browserslistrc` config with environments, for example like this 🦔:
+1) 🦔 Create `.browserslistrc` config with environments, for example like this:
 
 ```
 defaults
@@ -38,7 +38,7 @@ last 2 versions and last 1 year and not safari 12.1
 last 2 years and not last 2 versions
 ```
 
-2) Create `webpack.config.js` for [multiple outputs](https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations) 📝:
+2) 📝 Create `webpack.config.js` for [multiple outputs](https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations):
 
 ```js
 function createWebpackConfig(env) {
@@ -73,7 +73,7 @@ function createWebpackConfig(env) {
 }
 ```
 
-3) Add `bdsl-webpack-plugin` 🦄:
+3) 🦄 Add `bdsl-webpack-plugin`:
 
 ```js
 const {
@@ -116,11 +116,11 @@ module.exports = [
 ].map(createWebpackConfig);
 ```
 
-4) Done 🎉! Now output `index.html` will contain differential script loading.
+4) 🎉 Done! Now output `index.html` will contain differential script loading.
 
 [Here you can see complete `webpack.config.js` example.](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/example/webpack.config.js)
 
-## Install ⬇️
+## Install
 
 ```bash
 npm i -D bdsl-webpack-plugin
@@ -128,12 +128,12 @@ npm i -D bdsl-webpack-plugin
 yarn add -D bdsl-webpack-plugin
 ```
 
-## You should know ⚠️
+## ⚠️ You should know ⚠️
 
 1) `bdsl-webpack-plugin` captures scripts only from `<head>` section, so with `html-webpack-plugin` you should use `inject: 'head'` setting;
 2) By default scripts will loading [asynchronously](https://javascript.info/script-async-defer#dynamic-scripts). You can use [`script-ext-html-webpack-plugin`](https://github.com/numical/script-ext-html-webpack-plugin) to set all scripts to [`defer`](https://javascript.info/script-async-defer#defer);
 3) Webpack configs must be in order from modern to old browsers, e.g. `['modern', 'actual', 'old]`;
 
-## Why? 🤔
+## Why?
 
 There is differential script loading with [module/nomodule trick](https://dev.to/thejohnstew/differential-serving-3dkf), for this you can use [webpack-module-nomodule-plugin](https://www.npmjs.com/package/webpack-module-nomodule-plugin). But browsers with `type=module` support already have JS-features with different level of support. For example: [optional chaining operator](https://caniuse.com/#feat=mdn-javascript_operators_optional_chaining) (for comparison [browsers with `type=module` support](https://caniuse.com/#feat=es6-module)).
