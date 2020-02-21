@@ -35,24 +35,22 @@ function createWebpackConfig(browsersOrEnv) {
 			rules: [{
 				test:    /\.js$/,
 				exclude: /node_modules/,
-				use:     {
-					loader:  'babel-loader',
-					options: {
-						cacheDirectory: true,
-						presets:        [
-							['@babel/preset-env', {
-								modules:     false,
-								useBuiltIns: 'usage',
-								corejs:      3,
-								targets:     browsers || getBrowserslistQueries({ env })
-							}]
-						],
-						plugins:        [
-							'@babel/plugin-proposal-class-properties',
-							'@babel/plugin-proposal-async-generator-functions',
-							'@babel/plugin-transform-runtime'
-						]
-					}
+				loader:  'babel-loader',
+				options: {
+					cacheDirectory: true,
+					presets:        [
+						['@babel/preset-env', {
+							modules:     false,
+							useBuiltIns: 'usage',
+							corejs:      3,
+							targets:     browsers || getBrowserslistQueries({ env })
+						}]
+					],
+					plugins:        [
+						'@babel/plugin-proposal-class-properties',
+						'@babel/plugin-proposal-async-generator-functions',
+						'@babel/plugin-transform-runtime'
+					]
 				}
 			}]
 		},
