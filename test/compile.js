@@ -9,7 +9,7 @@ import webpackConfig from '../example/webpack.config';
 export const fs = new MemoryFs();
 export const pathToArtifacts = path.resolve(__dirname, 'artifacts');
 
-function createConfig() {
+function createTestConfig() {
 	return webpackConfig.map((config, i) => ({
 		...config,
 		context,
@@ -26,7 +26,7 @@ function createConfig() {
 
 export default function compile(writeToFs = false) {
 
-	const webpackCompiler = webpack(createConfig());
+	const webpackCompiler = webpack(createTestConfig());
 
 	if (!writeToFs) {
 		webpackCompiler.outputFileSystem = fs;

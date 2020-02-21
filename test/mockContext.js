@@ -4,6 +4,10 @@ import {
 } from 'module-alias';
 
 export const context = path.join(__dirname, '..', 'example');
+const src = path.join(__dirname, '..', 'src');
 
 process.chdir(context);
-addAlias('bdsl-webpack-plugin', path.join(__dirname, '..', 'src'));
+
+if (typeof jest === 'undefined') {
+	addAlias('bdsl-webpack-plugin', src);
+}

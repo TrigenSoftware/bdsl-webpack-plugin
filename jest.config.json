@@ -3,5 +3,8 @@
 	"testRegex": "/test/.*\\.spec\\.(jsx?|tsx?)$",
 	"transform": {
 		"^.+\\.(jsx?|tsx?)$": "babel-jest"
+	},
+	"moduleNameMapper": {
+		"^bdsl-webpack-plugin$": "<rootDir>/src/index.js"
 	}
 }
