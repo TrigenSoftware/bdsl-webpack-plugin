@@ -42,34 +42,34 @@ last 2 years and not last 2 versions
 
 ```js
 function createWebpackConfig(env) {
-	return {
-		name:    env,
-		/* ... */
-		module:  {
-			rules: [{
-				test:    /\.js$/,
-				exclude: /node_modules/,
-				loader:  'babel-loader',
-				options: {
-					cacheDirectory: true,
-					presets:        [
-						['@babel/preset-env', {
-							modules:     false,
-							useBuiltIns: 'usage',
-							corejs:      3
-						}]
-					],
-					plugins:        [/* ... */]
-				}
-			}]
-		},
-		plugins: [
-			new HtmlWebpackPlugin({
-				template: 'src/index.html',
-				inject:   'head'
-			})
-		]
-	};
+    return {
+        name:    env,
+        /* ... */
+        module:  {
+            rules: [{
+                test:    /\.js$/,
+                exclude: /node_modules/,
+                loader:  'babel-loader',
+                options: {
+                    cacheDirectory: true,
+                    presets:        [
+                        ['@babel/preset-env', {
+                            modules:     false,
+                            useBuiltIns: 'usage',
+                            corejs:      3
+                        }]
+                    ],
+                    plugins:        [/* ... */]
+                }
+            }]
+        },
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: 'src/index.html',
+                inject:   'head'
+            })
+        ]
+    };
 }
 ```
 
@@ -77,42 +77,42 @@ function createWebpackConfig(env) {
 
 ```js
 const {
-	BdslWebpackPlugin,
-	getBrowserslistQueries,
-	getBrowserslistEnvList
+    BdslWebpackPlugin,
+    getBrowserslistQueries,
+    getBrowserslistEnvList
 } = require('bdsl-webpack-plugin');
 
 function createWebpackConfig(env) {
-	return {
-		name:    env,
-		/* ... */
-		module:  {
-			rules: [{
-				test:    /\.js$/,
-				exclude: /node_modules/,
-				loader:  'babel-loader',
-				options: {
-					cacheDirectory: true,
-					presets:        [
-						['@babel/preset-env', {
+    return {
+        name:    env,
+        /* ... */
+        module:  {
+            rules: [{
+                test:    /\.js$/,
+                exclude: /node_modules/,
+                loader:  'babel-loader',
+                options: {
+                    cacheDirectory: true,
+                    presets:        [
+                        ['@babel/preset-env', {
                             /* ... */
                             targets: getBrowserslistQueries({ env })
-						}]
-					],
-					plugins:        [/* ... */]
-				}
-			}]
-		},
-		plugins: [
-			new HtmlWebpackPlugin(/* ... */),
-			new BdslWebpackPlugin({ env })
-		]
-	};
+                        }]
+                    ],
+                    plugins:        [/* ... */]
+                }
+            }]
+        },
+        plugins: [
+            new HtmlWebpackPlugin(/* ... */),
+            new BdslWebpackPlugin({ env })
+        ]
+    };
 }
 
 module.exports = [
-	...getBrowserslistEnvList(),
-	undefined
+    ...getBrowserslistEnvList(),
+    undefined
 ].map(createWebpackConfig);
 ```
 
