@@ -79,7 +79,7 @@ module.exports = [
 
 module.exports = [
 	...browserslistEnvList,
-	undefined
+	undefined // to use default .browserslistrc queries
 ].map(createWebpackConfig);
 
 */

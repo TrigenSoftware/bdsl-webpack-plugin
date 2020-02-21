@@ -112,7 +112,7 @@ function createWebpackConfig(env) {
 
 module.exports = [
     ...getBrowserslistEnvList(),
-    undefined
+    undefined // to use default .browserslistrc queries
 ].map(createWebpackConfig);
 ```
 
