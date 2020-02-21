@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import MemoryFs from 'memory-fs';
 import {
 	context
-} from './setExampleContext';
+} from './mockContext';
 import webpackConfig from '../example/webpack.config';
 
 export const fs = new MemoryFs();

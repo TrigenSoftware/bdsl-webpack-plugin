@@ -4,7 +4,7 @@ const {
 	BdslWebpackPlugin,
 	getBrowserslistQueries,
 	getBrowserslistEnvList
-} = require(/* 'bdsl-webpack-plugin' */ '../src');
+} = require('bdsl-webpack-plugin');
 
 const browserslistEnvList = getBrowserslistEnvList();
 

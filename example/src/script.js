@@ -16,6 +16,4 @@ export class TestClass {
 
 const test = new TestClass();
 
-document.addEventListener('DOMContentLoaded', () => {
-	document.body.innerHTML = test.getBrowserInfo();
-});
+document.body.innerHTML = test.getBrowserInfo();
