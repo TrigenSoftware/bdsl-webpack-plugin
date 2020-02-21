@@ -132,8 +132,19 @@ yarn add -D bdsl-webpack-plugin
 
 1) `bdsl-webpack-plugin` captures scripts only from `<head>` section, so with `html-webpack-plugin` you should use `inject: 'head'` setting;
 2) By default scripts will loading [asynchronously](https://javascript.info/script-async-defer#dynamic-scripts). You can use [`script-ext-html-webpack-plugin`](https://github.com/numical/script-ext-html-webpack-plugin) to set all scripts to [`defer`](https://javascript.info/script-async-defer#defer);
-3) Webpack configs must be in order from modern to old browsers, e.g. `['modern', 'actual', 'old]`;
+3) Webpack configs must be in order from modern to old browsers, e.g. `['modern', 'actual', 'old']`;
 
 ## Why?
 
-There is differential script loading with [module/nomodule trick](https://dev.to/thejohnstew/differential-serving-3dkf), for this you can use [webpack-module-nomodule-plugin](https://www.npmjs.com/package/webpack-module-nomodule-plugin). But browsers with `type=module` support already have JS-features with different level of support. For example: [optional chaining operator](https://caniuse.com/#feat=mdn-javascript_operators_optional_chaining) (for comparison [browsers with `type=module` support](https://caniuse.com/#feat=es6-module)).
+There is differential script loading with [module/nomodule trick](https://dev.to/thejohnstew/differential-serving-3dkf), for this you can use [webpack-module-nomodule-plugin](https://www.npmjs.com/package/webpack-module-nomodule-plugin). But browsers that support `type=module` already have new JS-features with different level of support. For example: [optional chaining operator](https://caniuse.com/#feat=mdn-javascript_operators_optional_chaining) (for comparison [browsers with `type=module` support](https://caniuse.com/#feat=es6-module)).
+
+## Plugin options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| browsers | `string \| string[]` | — | Manually provide a browserslist query (or an array of queries). Specifying this overrides the browserslist configuration specified in your project. |
+| env | `string` | — | When multiple browserslist [environments](https://github.com/ai/browserslist#environments) are specified, pick the config belonging to this environment. |
+| ignorePatch | `boolean` | `true` | Ignore differences in patch browser numbers. |
+| ignoreMinor | `boolean` | `false` | Ignore differences in minor browser versions. |
+| allowHigherVersions | `boolean` | `true` | For all the browsers in the browserslist query, return a match if the useragent version is equal to or higher than the one specified in browserslist. |
+| allowZeroSubverions | `boolean` | `true` | Ignore match of patch or patch and minor, if they are 0. |
