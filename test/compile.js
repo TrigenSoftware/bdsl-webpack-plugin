@@ -1,63 +1,32 @@
 import path from 'path';
 import webpack from 'webpack';
 import MemoryFs from 'memory-fs';
-import HtmlPlugin from 'html-webpack-plugin';
-import BdslPlugin from '../src';
+import {
+	context
+} from './setExampleContext';
+import webpackConfig from '../example/webpack.config';
 
 export const fs = new MemoryFs();
 export const pathToArtifacts = path.resolve(__dirname, 'artifacts');
 
-function createConfig(fixtureEntry, browsers) {
-	return {
-		name:         browsers,
-		mode:         'production',
-		devtool:      'inline-source-map',
+function createConfig() {
+	return webpackConfig.map((config, i) => ({
+		...config,
+		context,
+		output:       {
+			...config.output,
+			path:     pathToArtifacts,
+			filename: `index.${i}.js`
+		},
 		optimization: {
 			minimize: false
-		},
-		context:      __dirname,
-		entry:        `./${fixtureEntry}`,
-		output:       {
-			publicPath: '/',
-			path:       pathToArtifacts,
-			filename:   'bundle.[hash].js'
-		},
-		module:  {
-			rules: [{
-				test:    /\.js$/,
-				exclude: /node_modules/,
-				use:     {
-					loader:  'babel-loader',
-					options: {
-						cacheDirectory: false,
-						presets:        [
-							['babel-preset-trigen', {
-								targets: browsers
-							}]
-						]
-					}
-				}
-			}]
-		},
-		plugins:      [
-			new HtmlPlugin({
-				template: 'index.html',
-				inject:   'head'
-			}),
-			new BdslPlugin({
-				browsers
-			})
-		].filter(Boolean)
-	};
+		}
+	}));
 }
 
-export default function compile(fixtureEntry, writeToFs = false) {
+export default function compile(writeToFs = false) {
 
-	const webpackCompiler = webpack([
-		createConfig(fixtureEntry, 'last 2 versions and last 1 year'),
-		createConfig(fixtureEntry, 'last 2 years and not last 2 versions'),
-		createConfig(fixtureEntry, 'defaults')
-	]);
+	const webpackCompiler = webpack(createConfig());
 
 	if (!writeToFs) {
 		webpackCompiler.outputFileSystem = fs;

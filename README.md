@@ -12,6 +12,9 @@
 [node]: https://img.shields.io/node/v/bdsl-webpack-plugin.svg
 [node-url]: https://nodejs.org
 
+[peer-deps]: https://david-dm.org/TrigenSoftware/bdsl-webpack-plugin/peer-status.svg
+[peer-deps-url]: https://david-dm.org/TrigenSoftware/bdsl-webpack-plugin?type=peer
+
 [deps]: https://david-dm.org/TrigenSoftware/bdsl-webpack-plugin.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/bdsl-webpack-plugin
 
@@ -21,6 +24,6 @@
 [dependabot]: https://api.dependabot.com/badges/status?host=github&repo=TrigenSoftware/bdsl-webpack-plugin
 [dependabot-url]: https://dependabot.com/
 
-Browserslist Differential Script Loading webpack plugin.
+A webpack plugin to automate the generation of differential script loading. It uses [browserslist](https://github.com/browserslist/browserslist) and [browserslist-useragent-regexp](https://github.com/browserslist/browserslist-useragent-regexp).
 
 > This project generated with [generator-trigen-lib](https://www.npmjs.com/package/generator-trigen-lib)

@@ -1,7 +1,0 @@
-extends browserslist-config-trigen/browsers
-
-[modern]
-last 2 versions and last 1 year
-
-[actual]
-last 2 years and not last 2 versions

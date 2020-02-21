@@ -86,7 +86,9 @@ export default class BdslWebpackPlugin {
 
 		scriptsElementsMap.set(env, currentScripts);
 
-		if (scriptsElementsMap.size !== useragentRegExpsMap.size) {
+		if (scriptsElementsMap.size !== useragentRegExpsMap.size
+			|| useragentRegExpsMap.size < 2
+		) {
 			done();
 			return;
 		}
@@ -112,3 +114,7 @@ export default class BdslWebpackPlugin {
 		done();
 	}
 }
+
+export {
+	BdslWebpackPlugin
+};

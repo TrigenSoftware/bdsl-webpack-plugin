@@ -1,0 +1,6 @@
+{
+	"extends": "trigen/commonjs",
+	"env": {
+		"browser": true
+	}
+}

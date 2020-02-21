@@ -15,7 +15,7 @@ export function renderAttrs(scriptsElementsMap) {
 	return JSON.stringify(
 		elements.map(
 			element => Object.entries(element.attributes).filter(
-				([name]) => name !== 'src'
+				([name]) => name !== 'src' && name !== 'type'
 			)
 		)
 	);
@@ -24,7 +24,7 @@ export function renderAttrs(scriptsElementsMap) {
 export function renderLoading(elements) {
 	return elements.map(
 		(element, i) => `dsl(dsla[${i}],${JSON.stringify(element.attributes.src)})`
-	).join(';');
+	).join(',');
 }
 
 export function renderDebug(message) {
@@ -33,7 +33,7 @@ export function renderDebug(message) {
 		return '';
 	}
 
-	return `console.log(${JSON.stringify(message)});`;
+	return `console.log(${JSON.stringify(message)}),`;
 }
 
 export function renderDsl(useragentRegExpsMap, scriptsElementsMap) {
@@ -51,11 +51,11 @@ export function renderDsl(useragentRegExpsMap, scriptsElementsMap) {
 		const elements = scriptsElementsMap.get(env);
 
 		if (i === useragentRegExpsLastIndex) {
-			return `default:${renderDebug(env)}${renderLoading(elements)}`;
+			return `${renderDebug(env)}${renderLoading(elements)}`;
 		}
 
-		return `case ${useragentRegExp}.test(navigator.userAgent):${renderDebug(env)}${renderLoading(elements)}`;
-	}).join(';break;');
+		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${renderLoading(elements)}\n`;
+	}).join('else ');
 
-	return `${renderDslFunction()}var dslh=document.head,dsla=${attrs};switch(!0){${cases}}`;
+	return `${renderDslFunction()}var dslh=document.head,dslu=navigator.userAgent,dsla=${attrs};${cases}`;
 }

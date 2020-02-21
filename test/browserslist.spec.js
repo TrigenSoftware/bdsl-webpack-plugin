@@ -2,6 +2,7 @@ import {
 	getBrowserslistQueries,
 	getBrowserslistEnvList
 } from '../src/browserslist';
+import './setExampleContext';
 
 describe('bdsl-webpack-plugin', () => {
 
@@ -11,21 +12,18 @@ describe('bdsl-webpack-plugin', () => {
 
 			it('should return default queries', () => {
 
-				const queries = getBrowserslistQueries({
-					path: __dirname
-				});
+				const queries = getBrowserslistQueries();
 
-				expect(queries).toEqual(['extends browserslist-config-trigen/browsers']);
+				expect(queries).toEqual(['defaults']);
 			});
 
 			it('should return queries by env', () => {
 
 				const queries = getBrowserslistQueries({
-					path: __dirname,
 					env:  'modern'
 				});
 
-				expect(queries).toEqual(['last 2 versions and last 1 year']);
+				expect(queries).toEqual(['last 2 versions and last 1 year and not safari 12.1']);
 			});
 		});
 
@@ -33,9 +31,7 @@ describe('bdsl-webpack-plugin', () => {
 
 			it('should return env list', () => {
 
-				const envList = getBrowserslistEnvList({
-					path: __dirname
-				});
+				const envList = getBrowserslistEnvList();
 
 				expect(envList).toEqual(['modern', 'actual']);
 			});

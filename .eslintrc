@@ -2,5 +2,8 @@
 	"extends": "trigen/base",
 	"env": {
 		"node": true
+	},
+	"rules": {
+		"no-magic-numbers": "off"
 	}
 }

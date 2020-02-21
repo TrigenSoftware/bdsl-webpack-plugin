@@ -11,7 +11,7 @@ describe('bdsl-webpack-plugin', () => {
 		const ENV = process.env.NODE_ENV;
 
 		process.env.NODE_ENV = 'production';
-		await compile('script.js');
+		await compile();
 		process.env.NODE_ENV = ENV;
 
 		const html = fs.readFileSync(
@@ -21,7 +21,7 @@ describe('bdsl-webpack-plugin', () => {
 
 		expect(html.split('<script>').length).toEqual(2);
 		expect(html).toEqual(
-			expect.stringMatching(/<script>function dsl\([^)]+\)\{[^}]+\}var [^;]+;switch\(!0\)\{(case .*\.test\(navigator\.userAgent\):dsl\(dsla\[0\],"[^"]+"\);break;){2}default:dsl\(dsla\[0\],"[^"]+"\)\}/)
+			expect.stringMatching(/<script>function dsl\([^)]+\)\{[^}]+\}var [^;]+;if\(.*\.test\(dslu\)\)dsl\(dsla\[0\],"[^"]+"\)\nelse if\(.*\.test\(dslu\)\)dsl\(dsla\[0\],"[^"]+"\)\nelse dsl\(dsla\[0\],"[^"]+"\)/)
 		);
 	});
 });

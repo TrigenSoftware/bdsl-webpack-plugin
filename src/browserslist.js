@@ -43,13 +43,13 @@ function parsePackage(file) {
 /**
  * Get Browserslist config.
  * @param  {object} [options] - Browserslist options.
+ * @param  {string} [options.path='.'] - Path to config directory.
  * @param  {string} [options.config] - Path to config.
- * @param  {string} [options.path] - Path to config directory.
  * @return {object} Browserslist config.
  */
 export function getBrowserslistConfig({
-	config,
-	path
+	path = '.',
+	config
 } = {}) {
 
 	switch (true) {
@@ -79,8 +79,8 @@ export function getBrowserslistConfig({
 /**
  * Get Browserslist config's environments, ignoring `defaults` env.
  * @param  {object}   [options] - Browserslist options.
- * @param  {string}   [options.config] - Path to config.
  * @param  {string}   [options.path] - Path to config directory.
+ * @param  {string}   [options.config] - Path to config.
  * @return {string[]} Browserslist environments.
  */
 export function getBrowserslistEnvList(options) {
