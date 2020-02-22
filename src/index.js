@@ -35,7 +35,7 @@ export default class BdslWebpackPlugin {
 			? String(options.browsers)
 			: typeof options.env !== 'undefined'
 				? options.env
-				: undefined;
+				: 'defaults';
 		const useragentRegExp = getUserAgentRegExp({
 			allowHigherVersions: true,
 			allowZeroSubverions: true,

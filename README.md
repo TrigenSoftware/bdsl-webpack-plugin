@@ -146,6 +146,7 @@ yarn add -D bdsl-webpack-plugin
 1) `bdsl-webpack-plugin` captures scripts only from `<head>` section, so with `html-webpack-plugin` you should use `inject: 'head'` setting;
 2) By default scripts will loading [asynchronously](https://javascript.info/script-async-defer#dynamic-scripts). You can use [`script-ext-html-webpack-plugin`](https://github.com/numical/script-ext-html-webpack-plugin) to set all scripts to [`defer`](https://javascript.info/script-async-defer#defer);
 3) Webpack configs must be in order from modern to old browsers, e.g. `['modern', 'actual', 'old']`;
+4) `bdsl-webpack-plugin` also defines `process.env.BDSL_ENV` variable with bundle's environment.
 
 ## Why?
 

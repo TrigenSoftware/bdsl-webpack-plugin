@@ -57,5 +57,5 @@ export function renderDsl(useragentRegExpsMap, scriptsElementsMap) {
 		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${renderLoading(elements)}\n`;
 	}).join('else ');
 
-	return `${renderDslFunction()}var dslh=document.head,dslu=navigator.userAgent,dsla=${attrs};${cases}`;
+	return `${renderDslFunction()}var dslh=document.getElementsByTagName('head')[0],dslu=navigator.userAgent,dsla=${attrs};${cases}`;
 }
