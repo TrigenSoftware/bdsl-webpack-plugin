@@ -54,6 +54,7 @@
     "@trigen/scripts-plugin-size-limit": "4",
     "@trigen/scripts-preset-lib": "4",
     "babel-loader": "^8.0.6",
+    "canvg": "^3.0.5",
     "eslint-plugin-jest": "^23.7.0",
     "html-webpack-plugin": "^3.2.0",
     "memory-fs": "^0.5.0",
