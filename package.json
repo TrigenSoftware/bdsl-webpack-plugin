@@ -61,7 +61,8 @@
     "module-alias": "^2.2.2",
     "rollup-plugin-eslint": "^7.0.0",
     "size-limit": "^4.0.2",
-    "webpack": "^4.41.6"
+    "webpack": "^4.41.6",
+    "when-dom-ready": "^1.2.12"
   },
   "files": [
     "lib"

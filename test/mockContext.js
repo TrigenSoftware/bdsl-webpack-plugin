@@ -1,10 +1,19 @@
+/* eslint-disable import/no-dynamic-require */
 import path from 'path';
 import {
 	addAlias
 } from 'module-alias';
 
-export const context = path.join(__dirname, '..', 'example');
+const {
+	EXAMPLE = 'basic'
+} = process.env;
 const src = path.join(__dirname, '..', 'src');
+
+export const context = path.join(__dirname, '..', 'examples', EXAMPLE);
+
+export function getWebpackConfig(example = EXAMPLE) {
+	return require(`../examples/${example}/webpack.config.js`);
+}
 
 process.chdir(context);
 

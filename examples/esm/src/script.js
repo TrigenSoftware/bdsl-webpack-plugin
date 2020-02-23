@@ -1,3 +1,4 @@
+import whenDomReady from 'when-dom-ready';
 
 export class TestClass {
 
@@ -16,4 +17,6 @@ export class TestClass {
 
 const test = new TestClass();
 
-document.body.innerHTML = test.getBrowserInfo();
+whenDomReady(() => {
+	document.body.innerHTML = test.getBrowserInfo();
+});

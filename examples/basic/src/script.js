@@ -1,13 +1,10 @@
-import {
-	Point
-} from 'canvg';
+import whenDomReady from 'when-dom-ready';
 
 export class TestClass {
 
 	static env = process.env.BDSL_ENV;
 
 	userAgent = navigator.userAgent;
-	point = new Point('1,2');
 
 	async asyncMethod() {
 		return Math.random();
@@ -20,4 +17,6 @@ export class TestClass {
 
 const test = new TestClass();
 
-document.body.innerHTML = test.getBrowserInfo();
+whenDomReady(() => {
+	document.body.innerHTML = test.getBrowserInfo();
+});

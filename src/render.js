@@ -1,9 +1,18 @@
 
+export const ignoreAttrs = [
+	'type',
+	'src',
+	'async',
+	'defer'
+];
+
 export function renderDslFunction() {
 	return `function dsl(a,s,c,l,i){
-		c=document.createElement('script'),l=a.length;
-		for(i=0;i<l;i++)c.setAttribute(a[i][0], a[i][1]);
+		c=document.createElement('script');
+		l=a.length;
+		c.async=a[0];
 		c.setAttribute('src',s);
+		for(i=1;i<l;i++)c.setAttribute(a[i][0], a[i][1]);
 		dslh.appendChild(c)
 	}`.replace(/\n\s*/g, '');
 }
@@ -14,9 +23,19 @@ export function renderAttrs(scriptsElementsMap) {
 
 	return JSON.stringify(
 		elements.map(
-			element => Object.entries(element.attributes).filter(
-				([name]) => name !== 'src' && name !== 'type'
-			)
+			({ attributes }) => {
+
+				const {
+					async
+				} = attributes;
+				const entries = Object.entries(attributes).filter(
+					([name]) => !ignoreAttrs.includes(name)
+				);
+
+				return entries.length || async
+					? [Number(async), ...entries]
+					: entries;
+			}
 		)
 	);
 }
