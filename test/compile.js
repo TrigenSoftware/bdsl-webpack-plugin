@@ -9,6 +9,12 @@ import {
 export const fs = new MemoryFs();
 export const pathToArtifacts = path.resolve(__dirname, 'artifacts');
 
+const filenames = [
+	'modern',
+	'actual',
+	'old'
+];
+
 function createTestConfig() {
 	return getWebpackConfig().map((config, i) => ({
 		...config,
@@ -16,7 +22,7 @@ function createTestConfig() {
 		output:       {
 			...config.output,
 			path:     pathToArtifacts,
-			filename: `index.${i}.js`
+			filename: `index.${filenames[i] || i}.js`
 		},
 		optimization: {
 			minimize: false

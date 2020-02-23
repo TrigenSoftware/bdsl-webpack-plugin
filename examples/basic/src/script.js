@@ -18,5 +18,9 @@ export class TestClass {
 const test = new TestClass();
 
 whenDomReady(() => {
-	document.body.innerHTML = test.getBrowserInfo();
+
+	const script = document.getElementsByTagName('script')[1].outerHTML;
+
+	document.body.innerHTML = `${test.getBrowserInfo()}<br><br>`;
+	document.body.innerText += script;
 });
