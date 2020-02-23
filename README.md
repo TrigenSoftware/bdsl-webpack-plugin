@@ -131,7 +131,7 @@ else dsl(dsla[0],"/index.old.js")</script>
 </html>
 ```
 
-[Here you can see complete `webpack.config.js` example.](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/example/webpack.config.js)
+[Here you can see complete `webpack.config.js` example.](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/basic/webpack.config.js)
 
 ## Install
 
