@@ -24,9 +24,11 @@
 [dependabot]: https://api.dependabot.com/badges/status?host=github&repo=TrigenSoftware/bdsl-webpack-plugin
 [dependabot-url]: https://dependabot.com/
 
-A webpack plugin to automate the generation of differential script loading. It uses [browserslist](https://github.com/browserslist/browserslist) and [browserslist-useragent-regexp](https://github.com/browserslist/browserslist-useragent-regexp).
+A webpack plugin that automates generation of the differential script loading with [browserslist](https://github.com/browserslist/browserslist) and [browserslist-useragent-regexp](https://github.com/browserslist/browserslist-useragent-regexp).
 
-1) 🦔 Create `.browserslistrc` config with environments, for example like this:
+# Usage
+
+1) 🦔 Declare environments in `.browserslistrc` config like this:
 
 ```
 defaults
@@ -73,7 +75,7 @@ function createWebpackConfig(env) {
 }
 ```
 
-3) 🦄 Add `bdsl-webpack-plugin`:
+3) 🦄 Add `bdsl-webpack-plugin` to your code:
 
 ```js
 const {
@@ -116,7 +118,7 @@ module.exports = [
 ].map(createWebpackConfig);
 ```
 
-4) 🎉 Done! Now output `index.html` will contain differential script loading:
+4) 🎉 Done! Now `index.html` will contain differential script loading:
 
 ```html
 <!DOCTYPE html>
@@ -141,25 +143,25 @@ npm i -D bdsl-webpack-plugin
 yarn add -D bdsl-webpack-plugin
 ```
 
-## ⚠️ You should know ⚠️
+## ⚠️ Before you start ⚠️
 
-1) `bdsl-webpack-plugin` captures scripts only from `<head>` section, so with `html-webpack-plugin` you should use `inject: 'head'` setting;
-2) By default scripts will loading [asynchronously](https://javascript.info/script-async-defer#dynamic-scripts) and executed in "as they defined" order. To execute script in "load-first" order you should add [`async`](https://javascript.info/script-async-defer#async) attribute to `<script>` tag. For that you can use [`script-ext-html-webpack-plugin`](https://github.com/numical/script-ext-html-webpack-plugin);
-3) `defer` scripts are not supported, so you can use libraries [like this](https://www.npmjs.com/package/when-dom-ready) to bootstrap code when `DOM` ready;
-4) Webpack configs must be in order from modern to old browsers, e.g. `['modern', 'actual', 'old']`;
+1) `bdsl-webpack-plugin` captures scripts only from `<head>` section, so with `html-webpack-plugin` you should use `inject: 'head'` option;
+2) By default scripts are loaded [asynchronously](https://javascript.info/script-async-defer#dynamic-scripts) and executed in "as they defined" order. To execute script in "load-first" order you should add [`async`](https://javascript.info/script-async-defer#async) attribute to `<script>` tag. For that you can use [`script-ext-html-webpack-plugin`](https://github.com/numical/script-ext-html-webpack-plugin);
+3) `defer` scripts are not supported, so you can use libraries like [when-dom-ready](https://www.npmjs.com/package/when-dom-ready) to bootstrap code when `DOM` ready;
+4) Webpack configs must be in modern to old browser order, e.g. `['modern', 'actual', 'old']`;
 5) `bdsl-webpack-plugin` also defines `process.env.BDSL_ENV` variable with bundle's environment.
 
 ## Why?
 
-There is differential script loading with [module/nomodule trick](https://dev.to/thejohnstew/differential-serving-3dkf), for this you can use [webpack-module-nomodule-plugin](https://www.npmjs.com/package/webpack-module-nomodule-plugin). But browsers that support `type=module` already have new JS-features with different level of support. For example: [optional chaining operator](https://caniuse.com/#feat=mdn-javascript_operators_optional_chaining) (for comparison [browsers with `type=module` support](https://caniuse.com/#feat=es6-module)).
+There is a differential script loading with [module/nomodule trick](https://dev.to/thejohnstew/differential-serving-3dkf), for this you can use [webpack-module-nomodule-plugin](https://www.npmjs.com/package/webpack-module-nomodule-plugin). But browsers that support `type=module` already have new JS-features with different level of support. For example: [optional chaining operator](https://caniuse.com/#feat=mdn-javascript_operators_optional_chaining) (for comparison [browsers with `type=module` support](https://caniuse.com/#feat=es6-module)).
 
 ## Plugin options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| browsers | `string \| string[]` | — | Manually provide a browserslist query (or an array of queries). Specifying this overrides the browserslist configuration specified in your project. |
+| browsers | `string \| string[]` | — | Manually provide a browserslist query (or an array of queries). It overrides the browserslist configuration specified in your project. |
 | env | `string` | — | When multiple browserslist [environments](https://github.com/ai/browserslist#environments) are specified, pick the config belonging to this environment. |
-| ignorePatch | `boolean` | `true` | Ignore differences in patch browser numbers. |
-| ignoreMinor | `boolean` | `false` | Ignore differences in minor browser versions. |
-| allowHigherVersions | `boolean` | `true` | For all the browsers in the browserslist query, return a match if the useragent version is equal to or higher than the one specified in browserslist. |
+| ignorePatch | `boolean` | `true` | Ignore the difference in patch browser numbers. |
+| ignoreMinor | `boolean` | `false` | Ignore the difference in minor browser versions. |
+| allowHigherVersions | `boolean` | `true` | For all browsers in the browserslist query, return a match if the useragent version is equal to or higher than the one specified in browserslist. |
 | allowZeroSubverions | `boolean` | `true` | Ignore match of patch or patch and minor, if they are 0. |
