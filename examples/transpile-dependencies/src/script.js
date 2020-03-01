@@ -9,6 +9,7 @@ export class TestClass {
 
 	userAgent = navigator.userAgent;
 	point = new Point('1,2');
+	pr = Promise.resolve();
 
 	async asyncMethod() {
 		return Math.random();

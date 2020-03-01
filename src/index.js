@@ -6,6 +6,9 @@ import {
 	getUserAgentRegExp
 } from 'browserslist-useragent-regexp';
 import {
+	renderDsl as renderDslDw
+} from './render-dw';
+import {
 	renderDsl
 } from './render';
 
@@ -28,6 +31,9 @@ export default class BdslWebpackPlugin {
 	 * @param {boolean?}          [options.allowHigherVersions=true] - Return a match if the useragent version is equal to
 	 *                                                                 or higher than the one specified in browserslist.
 	 * @param {boolean?}          [options.allowZeroSubverions=true] - Ignore match of patch or patch and minor, if they are 0.
+	 * @param {boolean?}          [options.unsafeUseDocumentWrite=false] - Use `document.write()` to inject `<script>`.
+	 *                                                                     This variant supports `defer` scripts,
+	 *                                                                     but some browsers can restrict `document.write()` calls.
 	 */
 	constructor(options = {}) {
 
@@ -48,6 +54,9 @@ export default class BdslWebpackPlugin {
 		this.definePlugin = new DefinePlugin({
 			'process.env.BDSL_ENV': JSON.stringify(env)
 		});
+		this.renderDsl = options.unsafeUseDocumentWrite
+			? renderDslDw
+			: renderDsl;
 		this.injectDsl = this.injectDsl.bind(this);
 	}
 
@@ -78,7 +87,8 @@ export default class BdslWebpackPlugin {
 	}, done) {
 
 		const {
-			env
+			env,
+			renderDsl
 		} = this;
 		const currentScripts = head.filter(
 			element => element.tagName === 'script' && element.attributes

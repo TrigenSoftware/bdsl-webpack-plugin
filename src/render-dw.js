@@ -1,19 +1,21 @@
+import {
+	renderLoading,
+	renderDebug
+} from './render';
+
+export {
+	renderLoading,
+	renderDebug
+};
 
 export const ignoreAttrs = [
 	'type',
-	'src',
-	'async',
-	'defer'
+	'src'
 ];
 
 export function renderDslFunction() {
-	return `function dsl(a,s,c,l,i){
-		c=dsld.createElement('script');
-		l=a.length;
-		c.async=a[0];
-		c.src=s;
-		for(i=1;i<l;i++)c.setAttribute(a[i][0],a[i][1]);
-		dslf.appendChild(c)
+	return `function dsl(a,s){
+		dslf+='<script src="'+s+'" '+a+'><\\/script>';
 	}`.replace(/\n\s*/g, '');
 }
 
@@ -25,34 +27,19 @@ export function renderAttrs(scriptsElementsMap) {
 		elements.map(
 			({ attributes }) => {
 
-				const {
-					async
-				} = attributes;
 				const entries = Object.entries(attributes).filter(
 					([name]) => !ignoreAttrs.includes(name)
 				);
+				const attributesString = entries.map(([name, value]) => (
+					value
+						? name
+						: `${name}=${JSON.stringify(value)}`
+				)).join(' ');
 
-				return entries.length || async
-					? [Number(async), ...entries]
-					: entries;
+				return attributesString;
 			}
 		)
 	);
-}
-
-export function renderLoading(elements) {
-	return elements.map(
-		(element, i) => `dsl(dsla[${i}],${JSON.stringify(element.attributes.src)})`
-	).join(',');
-}
-
-export function renderDebug(message) {
-
-	if (process.env.NODE_ENV === 'production') {
-		return '';
-	}
-
-	return `console.log(${JSON.stringify(message)}),`;
 }
 
 export function renderDsl(useragentRegExpsMap, scriptsElementsMap) {
@@ -76,5 +63,5 @@ export function renderDsl(useragentRegExpsMap, scriptsElementsMap) {
 		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${renderLoading(elements)}\n`;
 	}).join('else ');
 
-	return `${renderDslFunction()}var dsld=document,dslf=dsld.createDocumentFragment(),dslu=navigator.userAgent,dsla=${attrs};${cases};dsld.all[1].appendChild(dslf)`;
+	return `${renderDslFunction()}var dslf='',dslu=navigator.userAgent,dsla=${attrs};${cases};document.write(dslf)`;
 }

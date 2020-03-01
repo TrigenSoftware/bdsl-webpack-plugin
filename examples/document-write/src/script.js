@@ -17,11 +17,17 @@ export class TestClass {
 }
 
 const test = new TestClass();
+const isDeferWorks = Boolean(document.getElementById('test159'));
 
 whenDomReady(() => {
 
 	const script = document.getElementsByTagName('script')[1].outerHTML;
+	const output = document.getElementById('output');
 
-	document.body.innerHTML = `${test.getBrowserInfo()}<br><br>`;
-	document.body.innerText += script;
+	output.innerHTML = `${test.getBrowserInfo()}<br><br>`;
+	output.innerText += script;
+
+	if (isDeferWorks) {
+		output.innerHTML += `<br><br>defer is works`;
+	}
 });

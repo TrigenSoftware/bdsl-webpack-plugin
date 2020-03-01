@@ -163,3 +163,4 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 | ignoreMinor | `boolean` | `false` | Ignore the difference in minor browser versions. |
 | allowHigherVersions | `boolean` | `true` | For all browsers in the browserslist query, return a match if the useragent version is equal to or higher than the one specified in browserslist. |
 | allowZeroSubverions | `boolean` | `true` | Ignore match of patch or patch and minor, if they are 0. |
+| unsafeUseDocumentWrite | `boolean` | `false` | Use `document.write()` to inject `<script>`. This variant supports `defer` scripts, [but some browsers can restrict `document.write()` calls](https://developers.google.com/web/updates/2016/08/removing-document-write). |

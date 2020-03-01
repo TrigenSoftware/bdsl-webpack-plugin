@@ -5,6 +5,7 @@ export class TestClass {
 	static env = process.env.BDSL_ENV;
 
 	userAgent = navigator.userAgent;
+	pr = Promise.resolve();
 
 	async asyncMethod() {
 		return Math.random();
