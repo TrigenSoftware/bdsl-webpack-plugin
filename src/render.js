@@ -25,7 +25,7 @@ export function renderDstlFunction() {
 		c.rel='stylesheet';
 		c.href=s;
 		l=a.length;
-		for(i=1;i<l;i++)c.setAttribute(a[i][0],a[i][1]);
+		for(i=0;i<l;i++)c.setAttribute(a[i][0],a[i][1]);
 		dslf.appendChild(c)
 	}`.replace(/\n\s*/g, '');
 }
@@ -36,7 +36,10 @@ export function renderAttrs(scriptsElementsMap) {
 
 	return JSON.stringify(
 		elements.map(
-			({ attributes }) => {
+			({
+				tagName,
+				attributes
+			}) => {
 
 				const {
 					async
@@ -45,7 +48,7 @@ export function renderAttrs(scriptsElementsMap) {
 					([name]) => !ignoreAttrs.includes(name)
 				);
 
-				return entries.length || async
+				return tagName === 'script' && (entries.length || async)
 					? [Number(async), ...entries]
 					: entries;
 			}
@@ -55,9 +58,12 @@ export function renderAttrs(scriptsElementsMap) {
 
 export function renderLoading(elements) {
 	return elements.map(
-		(element, i) => {
+		({
+			tagName,
+			attributes
+		}, i) => {
 
-			const isScript = element.tagName === 'script';
+			const isScript = tagName === 'script';
 
 			return `${
 				isScript
@@ -65,8 +71,8 @@ export function renderLoading(elements) {
 					: 'dstl'
 			}(dsla[${i}],${JSON.stringify(
 				isScript
-					? element.attributes.src
-					: element.attributes.href
+					? attributes.src
+					: attributes.href
 			)})`;
 		}
 	).join(',');
