@@ -3,15 +3,28 @@ export const ignoreAttrs = [
 	'type',
 	'src',
 	'async',
-	'defer'
+	'defer',
+	'rel',
+	'href'
 ];
 
 export function renderDslFunction() {
 	return `function dsl(a,s,c,l,i){
 		c=dsld.createElement('script');
-		l=a.length;
 		c.async=a[0];
 		c.src=s;
+		l=a.length;
+		for(i=1;i<l;i++)c.setAttribute(a[i][0],a[i][1]);
+		dslf.appendChild(c)
+	}`.replace(/\n\s*/g, '');
+}
+
+export function renderDstlFunction() {
+	return `function dstl(a,s,c,l,i){
+		c=dsld.createElement('link');
+		c.rel='stylesheet';
+		c.href=s;
+		l=a.length;
 		for(i=1;i<l;i++)c.setAttribute(a[i][0],a[i][1]);
 		dslf.appendChild(c)
 	}`.replace(/\n\s*/g, '');
@@ -42,7 +55,20 @@ export function renderAttrs(scriptsElementsMap) {
 
 export function renderLoading(elements) {
 	return elements.map(
-		(element, i) => `dsl(dsla[${i}],${JSON.stringify(element.attributes.src)})`
+		(element, i) => {
+
+			const isScript = element.tagName === 'script';
+
+			return `${
+				isScript
+					? 'dsl'
+					: 'dstl'
+			}(dsla[${i}],${JSON.stringify(
+				isScript
+					? element.attributes.src
+					: element.attributes.href
+			)})`;
+		}
 	).join(',');
 }
 
@@ -55,26 +81,43 @@ export function renderDebug(message) {
 	return `console.log(${JSON.stringify(message)}),`;
 }
 
-export function renderDsl(useragentRegExpsMap, scriptsElementsMap) {
+export function renderDsl(useragentRegExpsMap, elementsMap) {
 
 	const useragentRegExps = Array.from(
 		useragentRegExpsMap.entries()
 	);
 	const useragentRegExpsLastIndex = useragentRegExps.length - 1;
-	const attrs = renderAttrs(scriptsElementsMap);
+	const attrs = renderAttrs(elementsMap);
+	let withDsl = false;
+	let withDstl = false;
 	const cases = useragentRegExps.map(([
 		env,
 		useragentRegExp
 	], i) => {
 
-		const elements = scriptsElementsMap.get(env);
+		const elements = elementsMap.get(env);
+		const loading = renderLoading(elements);
 
-		if (i === useragentRegExpsLastIndex) {
-			return `${renderDebug(env)}${renderLoading(elements)}`;
+		if (/dsl\(/.test(loading)) {
+			withDsl = true;
 		}
 
-		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${renderLoading(elements)}\n`;
-	}).join('else ');
+		if (/dstl\(/.test(loading)) {
+			withDstl = true;
+		}
 
-	return `${renderDslFunction()}var dsld=document,dslf=dsld.createDocumentFragment(),dslu=navigator.userAgent,dsla=${attrs};${cases};dsld.all[1].appendChild(dslf)`;
+		if (i === useragentRegExpsLastIndex) {
+			return `${renderDebug(env)}${loading}`;
+		}
+
+		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${loading}\n`;
+	}).join('else ');
+	const dslFunction = withDsl
+		? renderDslFunction()
+		: '';
+	const dstlFunction = withDstl
+		? renderDstlFunction()
+		: '';
+
+	return `${dslFunction}${dstlFunction}var dsld=document,dslf=dsld.createDocumentFragment(),dslu=navigator.userAgent,dsla=${attrs};${cases};dsld.all[1].appendChild(dslf)`;
 }

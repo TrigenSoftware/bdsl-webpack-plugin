@@ -10,12 +10,20 @@ export {
 
 export const ignoreAttrs = [
 	'type',
-	'src'
+	'src',
+	'rel',
+	'href'
 ];
 
 export function renderDslFunction() {
 	return `function dsl(a,s){
 		dslf+='<script src="'+s+'" '+a+'><\\/script>';
+	}`.replace(/\n\s*/g, '');
+}
+
+export function renderDstlFunction() {
+	return `function dstl(a,s){
+		dslf+='<link rel="stylesheet" href="'+s+'" '+a+'>';
 	}`.replace(/\n\s*/g, '');
 }
 
@@ -42,26 +50,43 @@ export function renderAttrs(scriptsElementsMap) {
 	);
 }
 
-export function renderDsl(useragentRegExpsMap, scriptsElementsMap) {
+export function renderDsl(useragentRegExpsMap, elementsMap) {
 
 	const useragentRegExps = Array.from(
 		useragentRegExpsMap.entries()
 	);
 	const useragentRegExpsLastIndex = useragentRegExps.length - 1;
-	const attrs = renderAttrs(scriptsElementsMap);
+	const attrs = renderAttrs(elementsMap);
+	let withDsl = false;
+	let withDstl = false;
 	const cases = useragentRegExps.map(([
 		env,
 		useragentRegExp
 	], i) => {
 
-		const elements = scriptsElementsMap.get(env);
+		const elements = elementsMap.get(env);
+		const loading = renderLoading(elements);
 
-		if (i === useragentRegExpsLastIndex) {
-			return `${renderDebug(env)}${renderLoading(elements)}`;
+		if (/dsl\(/.test(loading)) {
+			withDsl = true;
 		}
 
-		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${renderLoading(elements)}\n`;
-	}).join('else ');
+		if (/dstl\(/.test(loading)) {
+			withDstl = true;
+		}
 
-	return `${renderDslFunction()}var dslf='',dslu=navigator.userAgent,dsla=${attrs};${cases};document.write(dslf)`;
+		if (i === useragentRegExpsLastIndex) {
+			return `${renderDebug(env)}${loading}`;
+		}
+
+		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${loading}\n`;
+	}).join('else ');
+	const dslFunction = withDsl
+		? renderDslFunction()
+		: '';
+	const dstlFunction = withDstl
+		? renderDstlFunction()
+		: '';
+
+	return `${dslFunction}${dstlFunction}var dslf='',dslu=navigator.userAgent,dsla=${attrs};${cases};document.write(dslf)`;
 }

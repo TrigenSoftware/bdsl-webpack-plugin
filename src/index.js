@@ -17,7 +17,7 @@ export * from './browserslist';
 export const indentifier = 'BdslWebpackPlugin';
 
 const useragentRegExpsMap = new Map();
-const scriptsElementsMap = new Map();
+const elementsMap = new Map();
 
 export default class BdslWebpackPlugin {
 
@@ -25,13 +25,14 @@ export default class BdslWebpackPlugin {
 	 * Browserslist Differential Script Loading webpack plugin.
 	 * @param {object}            [options] - browserslist-useragent-regexp options.
 	 * @param {string | string[]} [options.browsers] - Manually provide a browserslist query (or an array of queries).
-	 * @param {string?}           [options.env] - Pick the config belonging to this environment.
-	 * @param {boolean?}          [options.ignorePatch=true] - Ignore differences in patch browser numbers.
-	 * @param {boolean?}          [options.ignoreMinor=false] - Ignore differences in minor browser versions.
-	 * @param {boolean?}          [options.allowHigherVersions=true] - Return a match if the useragent version is equal to
+	 * @param {string}            [options.env] - Pick the config belonging to this environment.
+	 * @param {boolean}           [options.ignorePatch=true] - Ignore differences in patch browser numbers.
+	 * @param {boolean}           [options.ignoreMinor=false] - Ignore differences in minor browser versions.
+	 * @param {boolean}           [options.allowHigherVersions=true] - Return a match if the useragent version is equal to
 	 *                                                                 or higher than the one specified in browserslist.
-	 * @param {boolean?}          [options.allowZeroSubverions=true] - Ignore match of patch or patch and minor, if they are 0.
-	 * @param {boolean?}          [options.unsafeUseDocumentWrite=false] - Use `document.write()` to inject `<script>`.
+	 * @param {boolean}           [options.allowZeroSubverions=true] - Ignore match of patch or patch and minor, if they are 0.
+	 * @param {boolean}           [options.withStylesheets=false] - Enable differential stylesheets loading.
+	 * @param {boolean}           [options.unsafeUseDocumentWrite=false] - Use `document.write()` to inject `<script>`.
 	 *                                                                     This variant supports `defer` scripts,
 	 *                                                                     but some browsers can restrict `document.write()` calls.
 	 */
@@ -51,6 +52,7 @@ export default class BdslWebpackPlugin {
 		useragentRegExpsMap.set(env, useragentRegExp);
 
 		this.env = env;
+		this.withStylesheets = options.withStylesheets;
 		this.definePlugin = new DefinePlugin({
 			'process.env.BDSL_ENV': JSON.stringify(env)
 		});
@@ -88,29 +90,37 @@ export default class BdslWebpackPlugin {
 
 		const {
 			env,
+			withStylesheets,
 			renderDsl
 		} = this;
-		const currentScripts = head.filter(
-			element => element.tagName === 'script' && element.attributes
+		const currentElements = head.filter(
+			element => element.attributes && (
+				element.tagName === 'script'
+				|| (
+					withStylesheets
+					&& element.tagName === 'link'
+					&& element.attributes.rel === 'stylesheet'
+				)
+			)
 		);
 
-		scriptsElementsMap.set(env, currentScripts);
+		elementsMap.set(env, currentElements);
 
-		if (scriptsElementsMap.size !== useragentRegExpsMap.size
+		if (elementsMap.size !== useragentRegExpsMap.size
 			|| useragentRegExpsMap.size < 2
 		) {
 			done();
 			return;
 		}
 
-		const dsl = renderDsl(useragentRegExpsMap, scriptsElementsMap);
+		const dsl = renderDsl(useragentRegExpsMap, elementsMap);
 		const dslScript = {
 			tagName:   'script',
 			innerHTML: dsl,
 			voidTag:   false
 		};
 
-		currentScripts.forEach((script, i) => {
+		currentElements.forEach((script, i) => {
 
 			const indexToRemove = head.indexOf(script);
 
