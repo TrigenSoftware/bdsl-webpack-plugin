@@ -18,7 +18,7 @@ function createWebpackConfig(env) {
 	return {
 		name:    env,
 		mode:    'production',
-		entry:   '../src/script.js',
+		entry:   './src/script.js',
 		output:  {
 			publicPath: '/',
 			path:       path.resolve(__dirname, 'build'),

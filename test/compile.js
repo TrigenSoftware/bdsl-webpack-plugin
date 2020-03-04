@@ -10,19 +10,20 @@ export const fs = new MemoryFs();
 export const pathToArtifacts = path.resolve(__dirname, 'artifacts');
 
 const filenames = [
+	'esm',
 	'modern',
 	'actual',
 	'old'
 ];
 
 function createTestConfig() {
-	return getWebpackConfig().map((config, i) => ({
+	return getWebpackConfig().map((config, i, configs) => ({
 		...config,
 		context,
 		output:       {
 			...config.output,
 			path:     pathToArtifacts,
-			filename: `index.${filenames[i] || i}.js`
+			filename: `index.${filenames[i + (filenames.length - configs.length)] || i}.js`
 		},
 		optimization: {
 			minimize: false

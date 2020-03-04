@@ -165,3 +165,11 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 | allowZeroSubverions | `boolean` | `true` | Ignore match of patch or patch and minor, if they are 0. |
 | withStylesheets | `boolean` | `false` | Enable differential stylesheets loading. |
 | unsafeUseDocumentWrite | `boolean` | `false` | Use `document.write()` to inject `<script>`. This variant supports `defer` scripts, [but some browsers can restrict `document.write()` calls](https://developers.google.com/web/updates/2016/08/removing-document-write). |
+
+## Examples
+
+- [Basic](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/basic/README.md)
+- [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/README.md)
+- [Usage with `@babel/preset-modules`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/esm/README.md)
+- [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/README.md)
+- [Differential stylesheet loading](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/postcss-preset-env/README.md)
