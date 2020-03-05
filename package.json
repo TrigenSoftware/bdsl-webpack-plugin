@@ -1,6 +1,6 @@
 {
   "name": "bdsl-webpack-plugin",
-  "version": "1.0.0-beta",
+  "version": "1.1.0-beta",
   "description": "Browserslist Differential Script Loading webpack plugin.",
   "author": "dangreen",
   "license": "MIT",
@@ -28,6 +28,7 @@
   "keywords": [
     "browserslist",
     "differential-script-loading",
+    "differential-stylesheet-loading",
     "browserslist-useragent-regexp",
     "useragent",
     "webpack",

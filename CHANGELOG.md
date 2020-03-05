@@ -23,3 +23,12 @@ DO NOT TOUCH. SAVE IT ON TOP.
 - ...
 
 -->
+
+## [1.1.0-beta] - 2020-03-05
+### Added
+- Differential stylesheet loading by `withStylesheets` option;
+- `unsafeUseDocumentWrite` option;
+- Examples.
+
+### Changed
+- DocumentFragment is used for inserting elements.
