@@ -168,8 +168,8 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 
 ## Examples
 
-- [Basic](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/basic/README.md)
-- [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/README.md)
-- [Usage with `@babel/preset-modules`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/esm/README.md)
-- [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/README.md)
-- [Differential stylesheet loading](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/postcss-preset-env/README.md)
+- [Basic](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/basic/)
+- [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/)
+- [Usage with `@babel/preset-modules`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/esm/)
+- [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/)
+- [Differential stylesheet loading](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/postcss-preset-env/)
