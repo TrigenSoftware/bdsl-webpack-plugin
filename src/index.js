@@ -53,16 +53,22 @@ export default class BdslWebpackPlugin {
 
 		this.env = env;
 		this.withStylesheets = options.withStylesheets;
+		this.ingoreHtmlFilename = null;
 		this.definePlugin = new DefinePlugin({
 			'process.env.BDSL_ENV': JSON.stringify(env)
 		});
 		this.renderDsl = options.unsafeUseDocumentWrite
 			? renderDslDw
 			: renderDsl;
+		this.filterAssets = this.filterAssets.bind(this);
 		this.injectDsl = this.injectDsl.bind(this);
 	}
 
 	apply(compiler) {
+
+		if (useragentRegExpsMap.size < 2) {
+			return;
+		}
 
 		// eslint-disable-next-line prefer-reflect
 		this.definePlugin.apply(compiler);
@@ -81,9 +87,15 @@ export default class BdslWebpackPlugin {
 				);
 			}
 		});
+
+		compiler.hooks.emit.tap(
+			indentifier,
+			this.filterAssets
+		);
 	}
 
 	injectDsl({
+		outputName,
 		headTags,
 		head = headTags
 	}, done) {
@@ -104,11 +116,10 @@ export default class BdslWebpackPlugin {
 			)
 		);
 
+		this.ingoreHtmlFilename = outputName;
 		elementsMap.set(env, currentElements);
 
-		if (elementsMap.size !== useragentRegExpsMap.size
-			|| useragentRegExpsMap.size < 2
-		) {
+		if (elementsMap.size !== useragentRegExpsMap.size) {
 			done();
 			return;
 		}
@@ -132,6 +143,29 @@ export default class BdslWebpackPlugin {
 		});
 
 		done();
+	}
+
+	filterAssets(compilation) {
+
+		if (elementsMap.size === useragentRegExpsMap.size) {
+			return;
+		}
+
+		const {
+			ingoreHtmlFilename
+		} = this;
+
+		compilation.assets = Object.entries(compilation.assets).reduce(
+			(assets, [name, asset]) => {
+
+				if (name !== ingoreHtmlFilename) {
+					assets[name] = asset;
+				}
+
+				return assets;
+			},
+			{}
+		);
 	}
 }
 
