@@ -1,6 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const {
 	BdslWebpackPlugin,
@@ -89,8 +90,12 @@ function createWebpackConfig(browsersOrEnv) {
 				template: 'src/index.html',
 				inject:   'head'
 			}),
+			new ScriptExtHtmlWebpackPlugin({
+				defaultAttribute: 'defer'
+			}),
 			new BdslWebpackPlugin({
-				withStylesheets: true,
+				withStylesheets:        true,
+				unsafeUseDocumentWrite: true, // to load styles synchronously
 				browsers,
 				env
 			})
