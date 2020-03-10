@@ -127,7 +127,7 @@ function createWebpackConfig(env) {
             new HtmlWebpackPlugin(/* ... */),
             new BdslWebpackPlugin({
                 withStylesheets:        true,
-				unsafeUseDocumentWrite: true, // to load styles synchronously
+                unsafeUseDocumentWrite: true, // to load styles synchronously
                 env
             })
         ]
