@@ -8,6 +8,13 @@ export {
 	renderDebug
 };
 
+/**
+ * @typedef {import('./render').HTMLElementObject} HTMLElementObject
+ */
+
+/**
+ * @type {string[]}
+ */
 export const ignoreAttrs = [
 	'type',
 	'src',
@@ -15,21 +22,34 @@ export const ignoreAttrs = [
 	'href'
 ];
 
+/**
+ * Get function for collect scripts.
+ * @return {string} function string.
+ */
 export function renderDslFunction() {
 	return `function dsl(a,s){
 		dslf+='<script src="'+s+'" '+a+'><\\/script>';
 	}`.replace(/\n\s*/g, '');
 }
 
+/**
+ * Get function for collect links.
+ * @return {string} function string.
+ */
 export function renderDstlFunction() {
 	return `function dstl(a,s){
 		dslf+='<link rel="stylesheet" href="'+s+'" '+a+'>';
 	}`.replace(/\n\s*/g, '');
 }
 
-export function renderAttrs(scriptsElementsMap) {
+/**
+ * Get serialized element's attributes.
+ * @param  {Map<string, HTMLElementObject[]>} elementsMap - Env-to-elements map.
+ * @return {string} Serialized attributes.
+ */
+export function renderAttrs(elementsMap) {
 
-	const [, elements] = scriptsElementsMap.entries().next().value;
+	const [, elements] = elementsMap.entries().next().value;
 
 	return JSON.stringify(
 		elements.map(
@@ -50,6 +70,12 @@ export function renderAttrs(scriptsElementsMap) {
 	);
 }
 
+/**
+ * Get dsl code string.
+ * @param  {Map<string, RegExp>}              useragentRegExpsMap - Env-to-regexp map.
+ * @param  {Map<string, HTMLElementObject[]>} elementsMap - Env-to-elements map.
+ * @return {string} Code string.
+ */
 export function renderDsl(useragentRegExpsMap, elementsMap) {
 
 	const useragentRegExps = Array.from(

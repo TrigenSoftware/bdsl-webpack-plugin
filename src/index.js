@@ -3,27 +3,21 @@ import {
 } from 'webpack';
 import HtmlPlugin from 'html-webpack-plugin';
 import {
-	getUserAgentRegExp
-} from 'browserslist-useragent-regexp';
-import {
-	renderDsl as renderDslDw
-} from './render-dw';
-import {
-	renderDsl
-} from './render';
+	BdslBuilder
+} from './libbdsl';
 
-export * from './browserslist';
+export * from './libbdsl';
 
 export const indentifier = 'BdslWebpackPlugin';
 
-const useragentRegExpsMap = new Map();
-const elementsMap = new Map();
+const builders = new WeakMap();
 
 export default class BdslWebpackPlugin {
 
 	/**
 	 * Browserslist Differential Script Loading webpack plugin.
-	 * @param {object}            [options] - browserslist-useragent-regexp options.
+	 * @param {object}            [options] - Plugin options.
+	 * @param {string}            [options.groupId='default'] - Plugins group id.
 	 * @param {string | string[]} [options.browsers] - Manually provide a browserslist query (or an array of queries).
 	 * @param {string}            [options.env] - Pick the config belonging to this environment.
 	 * @param {boolean}           [options.ignorePatch=true] - Ignore differences in patch browser numbers.
@@ -38,35 +32,40 @@ export default class BdslWebpackPlugin {
 	 */
 	constructor(options = {}) {
 
-		const env = typeof options.browsers !== 'undefined'
-			? String(options.browsers)
-			: typeof options.env !== 'undefined'
-				? options.env
-				: 'defaults';
-		const useragentRegExp = getUserAgentRegExp({
-			allowHigherVersions: true,
-			allowZeroSubverions: true,
-			...options
-		});
+		const builder = this.getBuilder(options.groupId);
+		const env = builder.addEnv(options);
 
-		useragentRegExpsMap.set(env, useragentRegExp);
-
+		this.options = options;
 		this.env = env;
-		this.withStylesheets = options.withStylesheets;
+		this.builder = builder;
 		this.ingoreHtmlFilename = null;
 		this.definePlugin = new DefinePlugin({
 			'process.env.BDSL_ENV': JSON.stringify(env)
 		});
-		this.renderDsl = options.unsafeUseDocumentWrite
-			? renderDslDw
-			: renderDsl;
 		this.filterAssets = this.filterAssets.bind(this);
 		this.injectDsl = this.injectDsl.bind(this);
 	}
 
+	getBuilder(groupId = 'default') {
+
+		if (builders.has(groupId)) {
+			return builders.get(groupId);
+		}
+
+		const builder = new BdslBuilder();
+
+		builders.set(groupId, builder);
+
+		return builder;
+	}
+
 	apply(compiler) {
 
-		if (useragentRegExpsMap.size < 2) {
+		const {
+			builder
+		} = this;
+
+		if (!builder.isBuildable()) {
 			return;
 		}
 
@@ -101,10 +100,13 @@ export default class BdslWebpackPlugin {
 	}, done) {
 
 		const {
+			options,
 			env,
-			withStylesheets,
-			renderDsl
+			builder
 		} = this;
+		const {
+			withStylesheets
+		} = options;
 		const currentElements = head.filter(
 			element => element.attributes && (
 				element.tagName === 'script'
@@ -117,14 +119,15 @@ export default class BdslWebpackPlugin {
 		);
 
 		this.ingoreHtmlFilename = outputName;
-		elementsMap.set(env, currentElements);
 
-		if (elementsMap.size !== useragentRegExpsMap.size) {
+		builder.setEnvElements(env, currentElements);
+
+		if (!builder.isFilled()) {
 			done();
 			return;
 		}
 
-		const dsl = renderDsl(useragentRegExpsMap, elementsMap);
+		const dsl = builder.build(options);
 		const dslScript = {
 			tagName:   'script',
 			innerHTML: dsl,
@@ -147,7 +150,11 @@ export default class BdslWebpackPlugin {
 
 	filterAssets(compilation) {
 
-		if (elementsMap.size === useragentRegExpsMap.size) {
+		const {
+			builder
+		} = this;
+
+		if (builder.isFilled()) {
 			return;
 		}
 
