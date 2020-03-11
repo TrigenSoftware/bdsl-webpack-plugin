@@ -23,15 +23,6 @@ import {
 export class BdslBuilder {
 
 	/**
-	 * @type {Map<string, RegExp>}
-	 */
-	useragentRegExpsMap = new Map();
-	/**
-	 * @type {Map<string, HTMLElementObject[]>}
-	 */
-	elementsMap = new Map();
-
-	/**
 	 * Browserslist Differential Script Loading builder.
 	 * @param {object}  [options] - Builder and browserslist-useragent-regexp common options.
 	 * @param {boolean} [options.ignorePatch=true] - Ignore differences in patch browser numbers.
@@ -50,6 +41,7 @@ export class BdslBuilder {
 		allowZeroSubverions = true,
 		unsafeUseDocumentWrite = false
 	} = {}) {
+
 		this.commonOptions = {
 			ignorePatch,
 			ignoreMinor,
@@ -57,6 +49,16 @@ export class BdslBuilder {
 			allowZeroSubverions
 		};
 		this.unsafeUseDocumentWrite = unsafeUseDocumentWrite;
+
+		/**
+		 * @type {Map<string, RegExp>}
+		 */
+		this.useragentRegExpsMap = new Map();
+
+		/**
+		 * @type {Map<string, HTMLElementObject[]>}
+		 */
+		this.elementsMap = new Map();
 	}
 
 	/**

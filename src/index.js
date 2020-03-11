@@ -10,7 +10,7 @@ export * from './libbdsl';
 
 export const indentifier = 'BdslWebpackPlugin';
 
-const builders = new WeakMap();
+const builders = new Map();
 
 export default class BdslWebpackPlugin {
 
@@ -32,21 +32,26 @@ export default class BdslWebpackPlugin {
 	 */
 	constructor(options = {}) {
 
-		const builder = this.getBuilder(options.groupId);
+		this.options = options;
+		this.ingoreHtmlFilename = null;
+		this.filterAssets = this.filterAssets.bind(this);
+		this.injectDsl = this.injectDsl.bind(this);
+
+		const builder = this.getBuilder();
 		const env = builder.addEnv(options);
 
-		this.options = options;
 		this.env = env;
 		this.builder = builder;
-		this.ingoreHtmlFilename = null;
 		this.definePlugin = new DefinePlugin({
 			'process.env.BDSL_ENV': JSON.stringify(env)
 		});
-		this.filterAssets = this.filterAssets.bind(this);
-		this.injectDsl = this.injectDsl.bind(this);
 	}
 
-	getBuilder(groupId = 'default') {
+	getBuilder() {
+
+		const {
+			groupId = 'default'
+		} = this.options;
 
 		if (builders.has(groupId)) {
 			return builders.get(groupId);
@@ -57,6 +62,15 @@ export default class BdslWebpackPlugin {
 		builders.set(groupId, builder);
 
 		return builder;
+	}
+
+	releaseBuilder() {
+
+		const {
+			groupId = 'default'
+		} = this.options;
+
+		builders.delete(groupId);
 	}
 
 	apply(compiler) {
@@ -145,6 +159,7 @@ export default class BdslWebpackPlugin {
 			}
 		});
 
+		this.releaseBuilder();
 		done();
 	}
 
