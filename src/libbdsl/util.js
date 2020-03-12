@@ -21,11 +21,13 @@
 export function getEnvName(options = {}) {
 	return typeof options === 'string'
 		? options
-		: typeof options.browsers !== 'undefined'
-			? String(options.browsers)
-			: typeof options.env !== 'undefined'
-				? options.env
-				: 'defaults';
+		: typeof options.browsers === 'string'
+			? options.browsers
+			: Array.isArray(options.browsers)
+				? options.browsers.join(', ')
+				: typeof options.env !== 'undefined'
+					? options.env
+					: 'defaults';
 }
 
 /**

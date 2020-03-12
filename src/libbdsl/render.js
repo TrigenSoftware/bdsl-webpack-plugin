@@ -110,12 +110,13 @@ export function renderLoading(elements) {
 
 /**
  * Get debug message log.
- * @param  {string} message - Message to log.
+ * @param  {boolean} debug - Print debug information or not.
+ * @param  {string}  message - Message to log.
  * @return {string} Debug message print string.
  */
-export function renderDebug(message) {
+export function renderDebug(debug, message) {
 
-	if (process.env.NODE_ENV === 'production') {
+	if (!debug) {
 		return '';
 	}
 
@@ -126,9 +127,10 @@ export function renderDebug(message) {
  * Get dsl code string.
  * @param  {Map<string, RegExp>}              useragentRegExpsMap - Env-to-regexp map.
  * @param  {Map<string, HTMLElementObject[]>} elementsMap - Env-to-elements map.
+ * @param  {boolean}                          debug - Print debug information.
  * @return {string} Code string.
  */
-export function renderDsl(useragentRegExpsMap, elementsMap) {
+export function renderDsl(useragentRegExpsMap, elementsMap, debug = false) {
 
 	const useragentRegExps = Array.from(
 		useragentRegExpsMap.entries()
@@ -154,10 +156,10 @@ export function renderDsl(useragentRegExpsMap, elementsMap) {
 		}
 
 		if (i === useragentRegExpsLastIndex) {
-			return `${renderDebug(env)}${loading}`;
+			return `${renderDebug(debug, env)}${loading}`;
 		}
 
-		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${loading}\n`;
+		return `if(${useragentRegExp}.test(dslu))${renderDebug(debug, env)}${loading}\n`;
 	}).join('else ');
 	const dslFunction = withDsl
 		? renderDslFunction()

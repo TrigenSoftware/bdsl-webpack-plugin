@@ -74,9 +74,10 @@ export function renderAttrs(elementsMap) {
  * Get dsl code string.
  * @param  {Map<string, RegExp>}              useragentRegExpsMap - Env-to-regexp map.
  * @param  {Map<string, HTMLElementObject[]>} elementsMap - Env-to-elements map.
+ * @param  {boolean}                          debug - Print debug information.
  * @return {string} Code string.
  */
-export function renderDsl(useragentRegExpsMap, elementsMap) {
+export function renderDsl(useragentRegExpsMap, elementsMap, debug = false) {
 
 	const useragentRegExps = Array.from(
 		useragentRegExpsMap.entries()
@@ -102,10 +103,10 @@ export function renderDsl(useragentRegExpsMap, elementsMap) {
 		}
 
 		if (i === useragentRegExpsLastIndex) {
-			return `${renderDebug(env)}${loading}`;
+			return `${renderDebug(debug, env)}${loading}`;
 		}
 
-		return `if(${useragentRegExp}.test(dslu))${renderDebug(env)}${loading}\n`;
+		return `if(${useragentRegExp}.test(dslu))${renderDebug(debug, env)}${loading}\n`;
 	}).join('else ');
 	const dslFunction = withDsl
 		? renderDslFunction()

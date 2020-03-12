@@ -21,7 +21,7 @@ describe('bdsl-webpack-plugin', () => {
 
 		expect(html.split('<script>').length).toEqual(2);
 		expect(html).toEqual(
-			expect.stringMatching(/<script>function dsl\([^)]+\)\{[^}]+\}var [^;]+;if\(.*\.test\(dslu\)\)dsl\(dsla\[0\],"[^"]+"\)\nelse if\(.*\.test\(dslu\)\)dsl\(dsla\[0\],"[^"]+"\)\nelse dsl\(dsla\[0\],"[^"]+"\)/)
+			expect.stringMatching(/<script>function dsl\([^)]+\)\{[^}]+\}/)
 		);
 	});
 });

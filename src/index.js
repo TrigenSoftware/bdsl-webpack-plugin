@@ -12,6 +12,9 @@ export const indentifier = 'BdslWebpackPlugin';
 
 const builders = new Map();
 
+/**
+ * Browserslist Differential Script Loading webpack plugin.
+ */
 export default class BdslWebpackPlugin {
 
 	/**

@@ -20,6 +20,9 @@ import {
  * @typedef {import('./util').JSXElementObject} JSXElementObject
  */
 
+/**
+ * Browserslist Differential Script Loading builder.
+ */
 export class BdslBuilder {
 
 	/**
@@ -62,6 +65,19 @@ export class BdslBuilder {
 	}
 
 	/**
+	 * Check builder has enough count of environments.
+	 * @return {boolean} Result.
+	 */
+	isBuildable() {
+
+		const {
+			useragentRegExpsMap
+		} = this;
+
+		return useragentRegExpsMap.size > 1;
+	}
+
+	/**
 	 * Check builder has elements for every environment.
 	 * @return {boolean} Result.
 	 */
@@ -88,19 +104,6 @@ export class BdslBuilder {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Check builder has enough count of environments.
-	 * @return {boolean} Result.
-	 */
-	isBuildable() {
-
-		const {
-			useragentRegExpsMap
-		} = this;
-
-		return useragentRegExpsMap.size > 1;
 	}
 
 	/**
@@ -159,7 +162,8 @@ export class BdslBuilder {
 	}
 
 	build({
-		unsafeUseDocumentWrite = this.unsafeUseDocumentWrite
+		unsafeUseDocumentWrite = this.unsafeUseDocumentWrite,
+		debug = process.env.NODE_ENV !== 'production'
 	} = {}) {
 
 		if (!this.isBuildable()) {
@@ -174,6 +178,6 @@ export class BdslBuilder {
 			? renderDslDw
 			: renderDsl;
 
-		return render(useragentRegExpsMap, elementsMap);
+		return render(useragentRegExpsMap, elementsMap, debug);
 	}
 }
