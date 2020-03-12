@@ -6,5 +6,16 @@
 	},
 	"moduleNameMapper": {
 		"^bdsl-webpack-plugin$": "<rootDir>/src/index.js"
-	}
+	},
+	"collectCoverage": true,
+	"collectCoverageFrom": [
+		"src/**/*.{js,jsx,ts,tsx}",
+		"!src/cli.ts",
+		"!**/*.d.ts",
+		"!**/node_modules/**"
+	],
+	"coverageReporters": [
+		"lcovonly",
+		"text"
+	]
 }

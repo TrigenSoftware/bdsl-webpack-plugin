@@ -23,7 +23,8 @@
     "start": "trigen-scripts start",
     "build:testBundle": "NODE_ENV=test babel-node test/buildTestBundle",
     "build": "trigen-scripts build",
-    "cleanPublish": "trigen-scripts cleanPublish"
+    "cleanPublish": "trigen-scripts cleanPublish",
+    "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "browserslist",
