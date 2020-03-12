@@ -4,18 +4,26 @@ import {
 	addAlias
 } from 'module-alias';
 
-const {
-	EXAMPLE = 'basic'
-} = process.env;
-const src = path.join(__dirname, '..', 'src');
+let context = '';
 
-export const context = path.join(__dirname, '..', 'examples', EXAMPLE);
-
-export function getWebpackConfig(example = EXAMPLE) {
-	return require(`../examples/${example}/webpack.config.js`);
+export function setExampleContext(example = process.env.EXAMPLE || 'basic') {
+	context = path.join(__dirname, '..', 'examples', example);
+	process.chdir(context);
 }
 
-process.chdir(context);
+export function getContext() {
+	return context;
+}
+
+export function getWebpackConfig(example) {
+	return require(
+		example
+			? path.join('..', 'examples', example, 'webpack.config.js')
+			: path.join(context, 'webpack.config.js')
+	);
+}
+
+const src = path.join(__dirname, '..', 'src');
 
 if (typeof jest === 'undefined') {
 	addAlias('bdsl-webpack-plugin', src);

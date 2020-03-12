@@ -1,8 +1,12 @@
 import {
 	getBrowserslistQueries,
 	getBrowserslistEnvList
-} from '../src/browserslist';
-import './mockContext';
+} from '../src';
+import {
+	setExampleContext
+} from './mockContext';
+
+setExampleContext();
 
 describe('bdsl-webpack-plugin', () => {
 

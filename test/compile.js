@@ -2,9 +2,12 @@ import path from 'path';
 import webpack from 'webpack';
 import MemoryFs from 'memory-fs';
 import {
-	getWebpackConfig,
-	context
+	setExampleContext,
+	getContext,
+	getWebpackConfig
 } from './mockContext';
+
+setExampleContext();
 
 export const fs = new MemoryFs();
 export const pathToArtifacts = path.resolve(__dirname, 'artifacts');
@@ -19,7 +22,7 @@ const filenames = [
 function createTestConfig() {
 	return getWebpackConfig().map((config, i, configs) => ({
 		...config,
-		context,
+		context:      getContext(),
 		output:       {
 			...config.output,
 			path:     pathToArtifacts,

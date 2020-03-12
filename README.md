@@ -4,6 +4,7 @@
 [![Node version][node]][node-url]
 [![Dependencies status][deps]][deps-url]
 [![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
 [![Dependabot badge][dependabot]][dependabot-url]
 
 [npm]: https://img.shields.io/npm/v/bdsl-webpack-plugin.svg
@@ -20,6 +21,9 @@
 
 [build]: http://img.shields.io/travis/com/TrigenSoftware/bdsl-webpack-plugin/master.svg
 [build-url]: https://travis-ci.com/TrigenSoftware/bdsl-webpack-plugin
+
+[coverage]: https://img.shields.io/coveralls/TrigenSoftware/bdsl-webpack-plugin.svg
+[coverage-url]: https://coveralls.io/r/TrigenSoftware/bdsl-webpack-plugin
 
 [dependabot]: https://api.dependabot.com/badges/status?host=github&repo=TrigenSoftware/bdsl-webpack-plugin
 [dependabot-url]: https://dependabot.com/
