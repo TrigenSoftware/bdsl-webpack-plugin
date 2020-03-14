@@ -5,8 +5,4 @@ node_js:
 cache:
   directories:
     - node_modules
-after_success:
-  - pwd
-  - ls src
-  - cat ./coverage/lcov.info
-  - yarn coverage
+after_success: npm run coverage
