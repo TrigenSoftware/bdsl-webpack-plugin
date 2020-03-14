@@ -10,9 +10,17 @@ import compile, {
 describe('bdsl-webpack-plugin', () => {
 
 	const ENV = process.env.NODE_ENV;
+	let restoreContext = null;
 
 	beforeAll(() => {
 		process.env.NODE_ENV = 'production';
+	});
+
+	afterEach(() => {
+
+		if (restoreContext) {
+			restoreContext();
+		}
 	});
 
 	afterAll(() => {
@@ -20,6 +28,8 @@ describe('bdsl-webpack-plugin', () => {
 	});
 
 	it('should emit html file with dsl', async () => {
+
+		restoreContext = setExampleContext();
 
 		await compile();
 
@@ -36,7 +46,7 @@ describe('bdsl-webpack-plugin', () => {
 
 	it('should emit html file with dstl', async () => {
 
-		setExampleContext('postcss-preset-env');
+		restoreContext = setExampleContext('postcss-preset-env');
 
 		await compile();
 
@@ -53,7 +63,7 @@ describe('bdsl-webpack-plugin', () => {
 
 	it('should emit html file with `document.write()`', async () => {
 
-		setExampleContext('document-write');
+		restoreContext = setExampleContext('document-write');
 
 		await compile();
 

@@ -7,8 +7,14 @@ import {
 let context = '';
 
 export function setExampleContext(example = process.env.EXAMPLE || 'basic') {
+
+	const cwd = process.cwd();
+
 	context = path.join(__dirname, '..', 'examples', example);
+
 	process.chdir(context);
+
+	return process.chdir.bind(process, cwd);
 }
 
 export function getContext() {

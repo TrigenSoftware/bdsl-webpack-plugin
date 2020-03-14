@@ -6,9 +6,17 @@ import {
 	setExampleContext
 } from './mockContext';
 
-setExampleContext();
-
 describe('bdsl-webpack-plugin', () => {
+
+	let restoreContext = null;
+
+	beforeAll(() => {
+		restoreContext = setExampleContext();
+	});
+
+	afterAll(() => {
+		restoreContext();
+	});
 
 	describe('browserslist', () => {
 

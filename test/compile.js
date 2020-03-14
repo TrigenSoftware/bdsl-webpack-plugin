@@ -2,12 +2,9 @@ import path from 'path';
 import webpack from 'webpack';
 import MemoryFs from 'memory-fs';
 import {
-	setExampleContext,
 	getContext,
 	getWebpackConfig
 } from './mockContext';
-
-setExampleContext();
 
 export const fs = new MemoryFs();
 export const pathToArtifacts = path.resolve(__dirname, 'artifacts');
