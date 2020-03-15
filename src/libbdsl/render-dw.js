@@ -59,9 +59,9 @@ export function renderAttrs(elementsMap) {
 					([name]) => !ignoreAttrs.includes(name)
 				);
 				const attributesString = entries.map(([name, value]) => (
-					value
-						? name
-						: `${name}=${JSON.stringify(value)}`
+					typeof value !== 'undefined' && value !== true
+						? `${name}=${JSON.stringify(value)}`
+						: name
 				)).join(' ');
 
 				return attributesString;

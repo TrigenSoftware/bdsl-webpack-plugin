@@ -111,6 +111,7 @@ export default class BdslWebpackPlugin {
 	}
 
 	injectDsl({
+		plugin,
 		outputName,
 		headTags,
 		head = headTags
@@ -158,12 +159,45 @@ export default class BdslWebpackPlugin {
 			if (i) {
 				head.splice(indexToRemove, 1);
 			} else {
-				head.splice(indexToRemove, 1, dslScript);
+
+				const noscript = this.createNoscriptFallback(
+					plugin,
+					currentElements
+				);
+
+				if (noscript) {
+					head.splice(indexToRemove, 1, dslScript, noscript);
+				} else {
+					head.splice(indexToRemove, 1, dslScript);
+				}
 			}
 		});
 
 		this.releaseBuilder();
 		done();
+	}
+
+	createNoscriptFallback(plugin, elements) {
+
+		const innerHTML = elements.reduce((innerHTML, element) => {
+
+			if (element.tagName === 'link') {
+				return `${innerHTML}${plugin.createHtmlTag(element)}`;
+			}
+
+			return innerHTML;
+		}, '');
+
+		if (!innerHTML.length) {
+			return null;
+		}
+
+		return {
+			tagName:    'noscript',
+			closeTag:   true,
+			attributes: {},
+			innerHTML
+		};
 	}
 
 	filterAssets(compilation) {

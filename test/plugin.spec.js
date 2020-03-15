@@ -59,6 +59,9 @@ describe('bdsl-webpack-plugin', () => {
 		expect(html).toEqual(
 			expect.stringMatching(/<script>function dsl\([^)]+\)\{[^}]+\}function dstl\([^)]+\)\{[^}]+\}/)
 		);
+		expect(html).toEqual(
+			expect.stringMatching(/<noscript><link href="[^"]*" rel="stylesheet"><\/noscript>/)
+		);
 	});
 
 	it('should emit html file with `document.write()`', async () => {

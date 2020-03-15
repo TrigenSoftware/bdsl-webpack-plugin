@@ -74,7 +74,7 @@ export function renderAttrs(elementsMap) {
 				);
 
 				return tagName === 'script' && (entries.length || async)
-					? [Number(async), ...entries]
+					? [Number(Boolean(async)), ...entries]
 					: entries;
 			}
 		)
