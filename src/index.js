@@ -152,18 +152,15 @@ export default class BdslWebpackPlugin {
 			voidTag:   false
 		};
 
-		currentElements.forEach((script, i) => {
+		currentElements.forEach((element, i) => {
 
-			const indexToRemove = head.indexOf(script);
+			const indexToRemove = head.indexOf(element);
 
 			if (i) {
 				head.splice(indexToRemove, 1);
 			} else {
 
-				const noscript = this.createNoscriptFallback(
-					plugin,
-					currentElements
-				);
+				const noscript = this.createNoscriptFallback(plugin);
 
 				if (noscript) {
 					head.splice(indexToRemove, 1, dslScript, noscript);
@@ -177,9 +174,13 @@ export default class BdslWebpackPlugin {
 		done();
 	}
 
-	createNoscriptFallback(plugin, elements) {
+	createNoscriptFallback(plugin) {
 
-		const innerHTML = elements.reduce((innerHTML, element) => {
+		const {
+			builder
+		} = this;
+		const defaultElements = builder.getDefaultEnvElements();
+		const innerHTML = defaultElements.reduce((innerHTML, element) => {
 
 			if (element.tagName === 'link') {
 				return `${innerHTML}${plugin.createHtmlTag(element)}`;

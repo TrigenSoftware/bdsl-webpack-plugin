@@ -97,6 +97,40 @@ describe('bdsl-webpack-plugin', () => {
 			});
 		});
 
+		describe('#getDefaultEnvElements', () => {
+
+			it('should return elements for default env', () => {
+
+				const modern = 'last 2 chrome versions';
+				const defaults = 'defaults';
+				const modernElements = [{
+					modern: true
+				}];
+				const defaultsElements = [{
+					defaults: true
+				}];
+				const builder = new BdslBuilder();
+
+				builder.addEnv({
+					browsers: modern
+				}, modernElements);
+				builder.addEnv({
+					browsers: defaults
+				}, defaultsElements);
+
+				expect(
+					builder.getDefaultEnvElements()
+				).toEqual(
+					defaultsElements
+				);
+				expect(
+					builder.getDefaultEnvElements()
+				).not.toEqual(
+					modernElements
+				);
+			});
+		});
+
 		describe('#addEnv', () => {
 
 			it('should add env', () => {

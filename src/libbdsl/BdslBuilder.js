@@ -107,6 +107,22 @@ export class BdslBuilder {
 	}
 
 	/**
+	 * Get HTML elements for default env.
+	 * @return {HTMLElementObject[]} Elements.
+	 */
+	getDefaultEnvElements() {
+
+		const {
+			useragentRegExpsMap,
+			elementsMap
+		} = this;
+		const defaultEnv = Array.from(useragentRegExpsMap.keys()).pop();
+		const defaultEnvElements = elementsMap.get(defaultEnv);
+
+		return defaultEnvElements;
+	}
+
+	/**
 	 * Add environment scripts.
 	 * @param  {object}                                 options - browserslist-useragent-regexp options.
 	 * @param  {string | string[]}                      [options.browsers] - Manually provide a browserslist query (or an array of queries).
