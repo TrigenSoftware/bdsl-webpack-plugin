@@ -24,6 +24,15 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [1.2.0-beta] - 2020-03-16
+### Added
+- `<noscript>` fallback for stylesheets;
+- External JS API;
+- More tests.
+
+### Fixed
+- `unsafeUseDocumentWrite` dsl rendering fix.
+
 ## [1.1.0-beta] - 2020-03-05
 ### Added
 - Differential stylesheet loading by `withStylesheets` option;
