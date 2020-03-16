@@ -12,6 +12,7 @@ html {
 }
 
 body {
+	display: block;
 	color: var(--mainColor);
 }
 

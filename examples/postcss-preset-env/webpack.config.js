@@ -94,8 +94,7 @@ function createWebpackConfig(browsersOrEnv) {
 				defaultAttribute: 'defer'
 			}),
 			new BdslWebpackPlugin({
-				withStylesheets:        true,
-				unsafeUseDocumentWrite: true, // to load styles synchronously
+				withStylesheets: true,
 				browsers,
 				env
 			})
