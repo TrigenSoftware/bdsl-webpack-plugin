@@ -177,3 +177,4 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 - [Usage with `@babel/preset-modules`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/esm/)
 - [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/)
 - [Differential stylesheet loading](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/postcss-preset-env/)
+- [JS API with `@loadable/server`](https://github.com/TrigenSoftware/DevFest-Siberia/blob/master/src/App/render.tsx#L159)
