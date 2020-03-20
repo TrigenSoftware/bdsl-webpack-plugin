@@ -9,6 +9,8 @@ import {
 	renderDsl as renderDslDw
 } from './render-dw';
 import {
+	renderModuleTest,
+	renderUserAgentRegExpTest,
 	renderDsl
 } from './render';
 
@@ -54,9 +56,9 @@ export class BdslBuilder {
 		this.unsafeUseDocumentWrite = unsafeUseDocumentWrite;
 
 		/**
-		 * @type {Map<string, RegExp>}
+		 * @type {Map<string, string>}
 		 */
-		this.useragentRegExpsMap = new Map();
+		this.testersMap = new Map();
 
 		/**
 		 * @type {Map<string, HTMLElementObject[]>}
@@ -71,10 +73,10 @@ export class BdslBuilder {
 	isBuildable() {
 
 		const {
-			useragentRegExpsMap
+			testersMap
 		} = this;
 
-		return useragentRegExpsMap.size > 1;
+		return testersMap.size > 1;
 	}
 
 	/**
@@ -84,7 +86,7 @@ export class BdslBuilder {
 	isFilled() {
 
 		const {
-			useragentRegExpsMap,
+			testersMap,
 			elementsMap
 		} = this;
 
@@ -92,13 +94,13 @@ export class BdslBuilder {
 			return false;
 		}
 
-		if (elementsMap.size !== useragentRegExpsMap.size) {
+		if (elementsMap.size !== testersMap.size) {
 			return false;
 		}
 
 		for (const env of elementsMap.keys()) {
 
-			if (!useragentRegExpsMap.has(env)) {
+			if (!testersMap.has(env)) {
 				return false;
 			}
 		}
@@ -113,10 +115,10 @@ export class BdslBuilder {
 	getDefaultEnvElements() {
 
 		const {
-			useragentRegExpsMap,
+			testersMap,
 			elementsMap
 		} = this;
-		const defaultEnv = Array.from(useragentRegExpsMap.keys()).pop();
+		const defaultEnv = Array.from(testersMap.keys()).pop();
 		const defaultEnvElements = elementsMap.get(defaultEnv);
 
 		return defaultEnvElements;
@@ -125,6 +127,7 @@ export class BdslBuilder {
 	/**
 	 * Add environment scripts.
 	 * @param  {object}                                 options - browserslist-useragent-regexp options.
+	 * @param  {boolean}                                [options.isModule] - Use `type=module` support check instead of RegExp.
 	 * @param  {string | string[]}                      [options.browsers] - Manually provide a browserslist query (or an array of queries).
 	 * @param  {string}                                 [options.env] - Pick the config belonging to this environment.
 	 * @param  {boolean}                                [options.ignorePatch=true] - Ignore differences in patch browser numbers.
@@ -141,16 +144,25 @@ export class BdslBuilder {
 
 		const {
 			commonOptions,
-			useragentRegExpsMap,
+			testersMap,
 			elementsMap
 		} = this;
+		const {
+			isModule
+		} = options;
 		const env = getEnvName(options);
-		const useragentRegExp = getUserAgentRegExp({
-			...commonOptions,
-			...options
-		});
 
-		useragentRegExpsMap.set(env, useragentRegExp);
+		if (isModule) {
+			testersMap.set(env, renderModuleTest());
+		} else {
+
+			const useragentRegExp = getUserAgentRegExp({
+				...commonOptions,
+				...options
+			});
+
+			testersMap.set(env, renderUserAgentRegExpTest(useragentRegExp));
+		}
 
 		if (elements) {
 			elementsMap.set(env, elementsFromJSX(elements));
@@ -177,6 +189,15 @@ export class BdslBuilder {
 		return env;
 	}
 
+	/**
+	 * Build dsl script.
+	 * @param  {object}  [options] - Build options.
+	 * @param  {boolean} [options.unsafeUseDocumentWrite=false] - Use `document.write()` to inject `<script>`.
+	 *                                                            This variant supports `defer` scripts,
+	 *                                                            but some browsers can restrict `document.write()` calls.
+	 * @param  {boolean} [options.debug] - Print debug info.
+	 * @return {string} DSL script.
+	 */
 	build({
 		unsafeUseDocumentWrite = this.unsafeUseDocumentWrite,
 		debug = process.env.NODE_ENV !== 'production'
@@ -187,13 +208,14 @@ export class BdslBuilder {
 		}
 
 		const {
-			useragentRegExpsMap,
+			testersMap,
 			elementsMap
 		} = this;
 		const render = unsafeUseDocumentWrite
 			? renderDslDw
 			: renderDsl;
+		const dsl = render(testersMap, elementsMap, debug);
 
-		return render(useragentRegExpsMap, elementsMap, debug);
+		return dsl;
 	}
 }

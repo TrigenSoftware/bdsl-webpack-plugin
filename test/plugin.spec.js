@@ -80,4 +80,21 @@ describe('bdsl-webpack-plugin', () => {
 			expect.stringMatching(/document\.write\(dslf\)<\/script>/)
 		);
 	});
+
+	it('should emit html file with module shortcut', async () => {
+
+		restoreContext = setExampleContext('esm');
+
+		await compile();
+
+		const html = fs.readFileSync(
+			path.join(pathToArtifacts, 'index.html'),
+			'utf8'
+		);
+
+		expect(html.split('<script>').length).toEqual(2);
+		expect(html).toEqual(
+			expect.stringMatching(/'noModule' in dsld\.createElement\('script'\)/)
+		);
+	});
 });

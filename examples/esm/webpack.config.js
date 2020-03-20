@@ -54,7 +54,10 @@ function createWebpackConfig(env) {
 				template: 'src/index.html',
 				inject:   'head'
 			}),
-			new BdslWebpackPlugin({ env })
+			new BdslWebpackPlugin({
+				isModule: isEsm,
+				env
+			})
 		]
 	};
 }
