@@ -62,6 +62,17 @@ describe('bdsl-webpack-plugin', () => {
 					'actual'
 				);
 			});
+
+			it('should return env from isModule', () => {
+
+				expect(
+					getEnvName({
+						isModule: true
+					})
+				).toBe(
+					'module'
+				);
+			});
 		});
 
 		describe('elementsFromJSX', () => {
