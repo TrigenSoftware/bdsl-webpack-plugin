@@ -24,7 +24,7 @@ export const ignoreAttrs = [
 
 /**
  * Get function for collect scripts.
- * @return {string} function string.
+ * @return {string} Function string.
  */
 export function renderDslFunction() {
 	return `function dsl(a,s){
@@ -34,7 +34,7 @@ export function renderDslFunction() {
 
 /**
  * Get function for collect links.
- * @return {string} function string.
+ * @return {string} Function string.
  */
 export function renderDstlFunction() {
 	return `function dstl(a,s){
@@ -72,23 +72,23 @@ export function renderAttrs(elementsMap) {
 
 /**
  * Get dsl code string.
- * @param  {Map<string, RegExp>}              useragentRegExpsMap - Env-to-regexp map.
+ * @param  {Map<string, string>}              testersMap - Env-to-regexp map.
  * @param  {Map<string, HTMLElementObject[]>} elementsMap - Env-to-elements map.
  * @param  {boolean}                          debug - Print debug information.
  * @return {string} Code string.
  */
-export function renderDsl(useragentRegExpsMap, elementsMap, debug = false) {
+export function renderDsl(testersMap, elementsMap, debug = false) {
 
-	const useragentRegExps = Array.from(
-		useragentRegExpsMap.entries()
+	const testers = Array.from(
+		testersMap.entries()
 	);
-	const useragentRegExpsLastIndex = useragentRegExps.length - 1;
+	const testersLastIndex = testers.length - 1;
 	const attrs = renderAttrs(elementsMap);
 	let withDsl = false;
 	let withDstl = false;
-	const cases = useragentRegExps.map(([
+	const cases = testers.map(([
 		env,
-		useragentRegExp
+		tester
 	], i) => {
 
 		const elements = elementsMap.get(env);
@@ -102,11 +102,11 @@ export function renderDsl(useragentRegExpsMap, elementsMap, debug = false) {
 			withDstl = true;
 		}
 
-		if (i === useragentRegExpsLastIndex) {
+		if (i === testersLastIndex) {
 			return `${renderDebug(debug, env)}${loading}`;
 		}
 
-		return `if(${useragentRegExp}.test(dslu))${renderDebug(debug, env)}${loading}\n`;
+		return `if(${tester})${renderDebug(debug, env)}${loading}\n`;
 	}).join('else ');
 	const dslFunction = withDsl
 		? renderDslFunction()

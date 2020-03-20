@@ -12,8 +12,8 @@ describe('bdsl-webpack-plugin', () => {
 
 				const builder = new BdslBuilder();
 
-				builder.useragentRegExpsMap.set('env1', /_/);
-				builder.useragentRegExpsMap.set('env2', /_/);
+				builder.testersMap.set('env1', '');
+				builder.testersMap.set('env2', '');
 
 				expect(
 					builder.isBuildable()
@@ -32,7 +32,7 @@ describe('bdsl-webpack-plugin', () => {
 					false
 				);
 
-				builder.useragentRegExpsMap.set('env1', /_/);
+				builder.testersMap.set('env1', '');
 
 				expect(
 					builder.isBuildable()
@@ -48,8 +48,8 @@ describe('bdsl-webpack-plugin', () => {
 
 				const builder = new BdslBuilder();
 
-				builder.useragentRegExpsMap.set('env1', /_/);
-				builder.useragentRegExpsMap.set('env2', /_/);
+				builder.testersMap.set('env1', '');
+				builder.testersMap.set('env2', '');
 				builder.elementsMap.set('env1', []);
 				builder.elementsMap.set('env2', []);
 
@@ -70,7 +70,7 @@ describe('bdsl-webpack-plugin', () => {
 					false
 				);
 
-				builder.useragentRegExpsMap.set('env1', /_/g);
+				builder.testersMap.set('env1', '');
 				builder.elementsMap.set('env1', []);
 
 				expect(
@@ -79,7 +79,7 @@ describe('bdsl-webpack-plugin', () => {
 					false
 				);
 
-				builder.useragentRegExpsMap.set('env2', /_/g);
+				builder.testersMap.set('env2', '');
 
 				expect(
 					builder.isFilled()
@@ -143,9 +143,15 @@ describe('bdsl-webpack-plugin', () => {
 				});
 
 				expect(
-					String(builder.useragentRegExpsMap.get(browsers))
+					builder.testersMap.get(browsers)
 				).toEqual(
 					expect.stringMatching(/Chrome/)
+				);
+
+				expect(
+					builder.testersMap.get(browsers)
+				).toEqual(
+					expect.stringMatching(/\.test\(dslu\)/)
 				);
 
 				expect(
@@ -165,15 +171,44 @@ describe('bdsl-webpack-plugin', () => {
 				}, []);
 
 				expect(
-					String(builder.useragentRegExpsMap.get(browsers))
+					builder.testersMap.get(browsers)
 				).toEqual(
 					expect.stringMatching(/Chrome/)
+				);
+
+				expect(
+					builder.testersMap.get(browsers)
+				).toEqual(
+					expect.stringMatching(/\.test\(dslu\)/)
 				);
 
 				expect(
 					builder.elementsMap.get(browsers)
 				).toEqual(
 					[]
+				);
+			});
+
+			it('should add module env', () => {
+
+				const browsers = 'last 2 chrome versions';
+				const builder = new BdslBuilder();
+
+				builder.addEnv({
+					isModule: true,
+					browsers
+				});
+
+				expect(
+					builder.testersMap.get(browsers)
+				).toEqual(
+					expect.stringMatching(/^'noModule' in dsld\.createElement\('script'\)$/)
+				);
+
+				expect(
+					builder.elementsMap.size
+				).toBe(
+					0
 				);
 			});
 		});
@@ -294,6 +329,53 @@ describe('bdsl-webpack-plugin', () => {
 					dsl
 				).toEqual(
 					expect.stringMatching(/document\.write/)
+				);
+			});
+
+			it('should build dsl script with module shortcut', () => {
+
+				const modern = 'last 2 chrome versions';
+				const actual = 'last 10 chrome versions';
+				const defaults = 'defaults';
+				const builder = new BdslBuilder();
+
+				builder.addEnv({
+					isModule: true,
+					browsers: modern
+				}, [{
+					tagName:    'script',
+					attributes: {
+						defer: true,
+						src:   'index.modern.js'
+					}
+				}]);
+				builder.addEnv({
+					browsers: actual
+				}, [{
+					tagName:    'script',
+					attributes: {
+						defer: true,
+						src:   'index.actual.js'
+					}
+				}]);
+				builder.addEnv({
+					browsers: defaults
+				}, [{
+					tagName:    'script',
+					attributes: {
+						defer: true,
+						src:   'index.defaults.js'
+					}
+				}]);
+
+				const dsl = builder.build({
+					debug: false
+				});
+
+				expect(
+					dsl
+				).toEqual(
+					expect.stringMatching(/^function dsl\([^)]+\)\{[^}]+\}var [^;]+;if\('noModule' in dsld\.createElement\('script'\)\)dsl\(dsla\[0\],"[^"]+"\)\nelse if\(.*\.test\(dslu\)\)dsl\(dsla\[0\],"[^"]+"\)\nelse dsl\(dsla\[0\],"[^"]+"\)/)
 				);
 			});
 		});

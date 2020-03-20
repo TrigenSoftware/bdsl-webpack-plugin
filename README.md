@@ -161,6 +161,7 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
+| isModule | `boolean` | — | Use `type=module` support check instead of RegExp. Should be used only on certain build. |
 | browsers | `string \| string[]` | — | Manually provide a browserslist query (or an array of queries). It overrides the browserslist configuration specified in your project. |
 | env | `string` | — | When multiple browserslist [environments](https://github.com/ai/browserslist#environments) are specified, pick the config belonging to this environment. |
 | ignorePatch | `boolean` | `true` | Ignore the difference in patch browser numbers. |
@@ -173,8 +174,8 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 ## Examples
 
 - [Basic](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/basic/)
-- [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/)
-- [Usage with `@babel/preset-modules`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/esm/)
-- [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/)
+- [`isModule` option with `@babel/preset-modules`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/esm/)
 - [Differential stylesheet loading](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/postcss-preset-env/)
+- [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/)
+- [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/)
 - [JS API with `@loadable/server`](https://github.com/TrigenSoftware/DevFest-Siberia/blob/master/src/App/render.tsx#L159)

@@ -6,9 +6,3 @@ firefox >= 60
 chrome >= 61
 safari >= 11
 opera >= 48
-
-[modern]
-last 2 versions and last 1 year and not safari 12.1
-
-[actual]
-last 2 years and not last 2 versions

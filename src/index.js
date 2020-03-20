@@ -21,6 +21,8 @@ export default class BdslWebpackPlugin {
 	 * Browserslist Differential Script Loading webpack plugin.
 	 * @param {object}            [options] - Plugin options.
 	 * @param {string}            [options.groupId='default'] - Plugins group id.
+	 * @param {boolean}           [options.isModule] - Use `type=module` support check instead of RegExp.
+	 *                                                 Should be used only on certain build.
 	 * @param {string | string[]} [options.browsers] - Manually provide a browserslist query (or an array of queries).
 	 * @param {string}            [options.env] - Pick the config belonging to this environment.
 	 * @param {boolean}           [options.ignorePatch=true] - Ignore differences in patch browser numbers.

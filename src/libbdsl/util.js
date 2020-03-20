@@ -27,7 +27,9 @@ export function getEnvName(options = {}) {
 				? options.browsers.join(', ')
 				: typeof options.env !== 'undefined'
 					? options.env
-					: 'defaults';
+					: options.isModule
+						? 'module'
+						: 'defaults';
 }
 
 /**
