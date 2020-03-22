@@ -180,7 +180,7 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 - [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/)
 - [JS API with `@loadable/server`](https://github.com/TrigenSoftware/DevFest-Siberia/blob/5f69fd81361896a6ca77256cb04dbea1e6842b30/src/App/render.tsx#L159)
 
-# Metrics
+## Metrics
 
 You can get speed metrics from any site using devtool from this repo.
 
