@@ -154,12 +154,11 @@ function printSummary(stats) {
 
 async function measureSites(urls, opts) {
 
-	const browser = await puppeteer.launch();
-
 	for (const url of urls) {
 
 		console.log(`\n${url}\n`);
 
+		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
 
 		await customizePage(page, opts);
@@ -168,10 +167,8 @@ async function measureSites(urls, opts) {
 			await measurePage(page, url)
 		);
 
-		await page.close();
+		await browser.close();
 	}
-
-	await browser.close();
 }
 
 measureSites(urls, {

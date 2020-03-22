@@ -179,3 +179,68 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 - [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/)
 - [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/)
 - [JS API with `@loadable/server`](https://github.com/TrigenSoftware/DevFest-Siberia/blob/5f69fd81361896a6ca77256cb04dbea1e6842b30/src/App/render.tsx#L159)
+
+# Metrics
+
+You can get speed metrics from any site using devtool from this repo.
+
+1) Clone repo:
+
+```bash
+git clone git@github.com:TrigenSoftware/bdsl-webpack-plugin.git
+```
+
+2) Install dependencies:
+
+```bash
+yarn
+```
+
+3) Now you can run script:
+
+```bash
+yarn measure \
+"https://nodsl.site.com/" \
+"https://site.com/"
+```
+
+<details>
+    <summary>Output example</summary>
+
+```bash
+https://nodsl.site.com/
+
+Average time: 1s 303ms
+Fastest time: 1s 203ms
+Slowest time: 2s 432ms
+Encoded size: 292 kB
+Decoded size: 1.08 MB
+
+https://site.com/
+
+Average time: 1s 274ms
+Fastest time: 1s 140ms
+Slowest time: 2s 284ms
+Encoded size: 218 kB
+Decoded size: 806 kB
+```
+</details>
+
+
+<details>
+    <summary>Parameters</summary>
+
+Environment variables:
+
+```
+MEASURE_TIMES - number of site measurements, 10 by default
+```
+
+Options:
+
+```
+--good3g - enable "Good 3G" network preset
+--regular4g - enable "Regular 4G" network preset
+--cache - enable resource caching
+```
+</details>
