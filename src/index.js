@@ -151,7 +151,8 @@ export default class BdslWebpackPlugin {
 		const dslScript = {
 			tagName:   'script',
 			innerHTML: dsl,
-			voidTag:   false
+			voidTag:   false,
+			closeTag:  true
 		};
 
 		currentElements.forEach((element, i) => {
@@ -185,6 +186,11 @@ export default class BdslWebpackPlugin {
 		const innerHTML = defaultElements.reduce((innerHTML, element) => {
 
 			if (element.tagName === 'link') {
+
+				if (typeof plugin.prepareAssetTagGroupForRendering === 'function') {
+					return `${innerHTML}${plugin.prepareAssetTagGroupForRendering([element])}`;
+				}
+
 				return `${innerHTML}${plugin.createHtmlTag(element)}`;
 			}
 
@@ -197,8 +203,9 @@ export default class BdslWebpackPlugin {
 
 		return {
 			tagName:    'noscript',
-			closeTag:   true,
 			attributes: {},
+			voidTag:    false,
+			closeTag:   true,
 			innerHTML
 		};
 	}
