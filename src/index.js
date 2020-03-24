@@ -187,7 +187,7 @@ export default class BdslWebpackPlugin {
 
 			if (element.tagName === 'link') {
 
-				if (typeof HtmlPlugin.createHtmlTagObject === 'function') {
+				if (typeof plugin.prepareAssetTagGroupForRendering === 'function') {
 					return `${innerHTML}${plugin.prepareAssetTagGroupForRendering([element])}`;
 				}
 
