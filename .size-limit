@@ -1,7 +1,7 @@
 [
 	{
 		"path": "lib/index.js",
-		"limit": "25 KB",
+		"limit": "32 KB",
 		"webpack": false
 	}
 ]
