@@ -107,7 +107,7 @@ module.exports = [
     <head>
         <title>Example</title>
         <script>function dsl(a,s,c,l,i){c=dsld.createElement('script');c.async=a[0];c.src=s;l=a.length;for(i=1;i<l;i++)c.setAttribute(a[i][0],a[i][1]);dslf.appendChild(c)}var dsld=document,dslf=dsld.createDocumentFragment(),dslu=navigator.userAgent,dsla=[[]];if('noModule' in dsld.createElement('script'))dsl(dsla[0],"/index.esm.js")
-else dsl(dsla[0],"/index.old.js");dsld.all[1].appendChild(dslf)</script>
+else dsl(dsla[0],"/index.legacy.js");dsld.all[1].appendChild(dslf)</script>
     </head>
     <body></body>
 </html>
