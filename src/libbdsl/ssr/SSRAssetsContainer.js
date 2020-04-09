@@ -56,11 +56,11 @@ export class SSRAssetsContainer {
 
 	/**
 	 * Add asset.
-	 * @param  {HTMLElementObject|HTMLElementObject[]} objects - HTML element object.
-	 * @param  {string|string[]} tags - HTML element string.
+	 * @param  {HTMLElementObject[]} objects - HTML element object.
+	 * @param  {string[]}            tags - HTML element string.
 	 * @return {SSRAssetsContainer} This container.
 	 */
-	add(objects, tags) {
+	set(objects, tags) {
 
 		const {
 			isReadOnly
@@ -70,17 +70,8 @@ export class SSRAssetsContainer {
 			throw new Error(`Can't add asset: this container is read-only.`);
 		}
 
-		if (Array.isArray(objects)) {
-			this.objects.push(...objects);
-		} else {
-			this.objects.push(objects);
-		}
-
-		if (Array.isArray(tags)) {
-			this.tags.push(...tags);
-		} else {
-			this.tags.push(tags);
-		}
+		this.objects = [...objects];
+		this.tags = [...tags];
 
 		return this;
 	}
@@ -124,7 +115,7 @@ export class SSRAssetsContainer {
 	 */
 	toJS() {
 		return {
-			objects: this.objects.map(obj => ({ ...obj })),
+			objects: [...this.objects],
 			tags:    [...this.tags]
 		};
 	}

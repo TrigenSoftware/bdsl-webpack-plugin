@@ -82,22 +82,16 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 			replaceTagsWithPlaceholder
 		} = options;
 		const currentElements = this.getCurrentElements(head);
+		const currentElementsTags = currentElements.map(
+			element => this.createHtmlTag(plugin, element)
+		);
 
 		this.setHtmlFilename(outputName);
-
-		currentElements.forEach((element) => {
-			collector.addAssets(env, element, this.createHtmlTag(plugin, element));
-		});
+		collector.setEnvAssets(env, currentElements, currentElementsTags);
 
 		if (!collector.isFilled()) {
 			done();
 			return;
-		}
-
-		const noscript = this.createNoscriptFallback(plugin);
-
-		if (noscript) {
-			collector.addAssets(env, noscript, this.createHtmlTag(plugin, noscript));
 		}
 
 		if (replaceTagsWithPlaceholder) {
@@ -157,17 +151,6 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 		}
 
 		super.filterAssets(compilation);
-	}
-
-	createNoscriptFallback(plugin) {
-
-		const {
-			collector
-		} = this;
-		const defaultElements = collector.getDefaultEnvElements();
-		const noscript = super.createNoscriptFallback(plugin, defaultElements);
-
-		return noscript;
 	}
 }
 

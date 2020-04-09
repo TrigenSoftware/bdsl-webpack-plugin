@@ -141,7 +141,7 @@ export class SSRAssetsCollector {
 		envsMap.set(env, useragentRegExp);
 
 		if (objects && tags) {
-			this.addAssets(env, objects, tags);
+			this.setEnvAssets(env, objects, tags);
 		}
 
 		return env;
@@ -149,16 +149,17 @@ export class SSRAssetsCollector {
 
 	/**
 	 * Add asset to env.
-	 * @param  {string}                                 env - Environment name.
+	 * @param  {string|object}                          optionsOrEnv - Env name or browserslist-useragent-regexp options.
 	 * @param  {(HTMLElementObject|JSXElementObject)[]} objects - HTML element object.
-	 * @param  {string|string[]}                        tags - HTML element string.
+	 * @param  {string[]}                               tags - HTML element string.
 	 * @return {SSRAssetsCollector} This collector.
 	 */
-	addAssets(env, objects, tags) {
+	setEnvAssets(optionsOrEnv, objects, tags) {
 
 		const {
 			containersMap
 		} = this;
+		const env = getEnvName(optionsOrEnv);
 
 		if (!containersMap.has(env)) {
 			containersMap.set(env, new SSRAssetsContainer(env));
@@ -166,7 +167,7 @@ export class SSRAssetsCollector {
 
 		const container = containersMap.get(env);
 
-		container.add(elementsFromJSX(objects), tags);
+		container.set(elementsFromJSX(objects), tags);
 
 		return this;
 	}

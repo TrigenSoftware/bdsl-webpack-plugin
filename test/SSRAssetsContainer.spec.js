@@ -2,124 +2,127 @@ import {
 	SSRAssetsContainer
 } from '../src';
 
-describe('SSR', () => {
+describe('bdsl-webpack-plugin', () => {
 
-	describe('SSRAssetsContainer', () => {
+	describe('SSR', () => {
 
-		const instance = new SSRAssetsContainer('env');
-		const objects = [
-			{ tagName: 'a' },
-			{ tagName: 'b' },
-			{ tagName: 'i' }
-		];
-		const tags = [
-			'<a>',
-			'<b>',
-			'<i>'
-		];
+		describe('SSRAssetsContainer', () => {
 
-		instance.add(objects, tags);
+			const instance = new SSRAssetsContainer('env');
+			const objects = [
+				{ tagName: 'a' },
+				{ tagName: 'b' },
+				{ tagName: 'i' }
+			];
+			const tags = [
+				'<a>',
+				'<b>',
+				'<i>'
+			];
 
-		describe('#constructor', () => {
+			instance.set(objects, tags);
 
-			it('should create instance', () => {
+			describe('#constructor', () => {
 
-				const instance = new SSRAssetsContainer('env');
+				it('should create instance', () => {
 
-				expect(instance.env).toBe('env');
-				expect(instance.isReadOnly).toBe(false);
-				expect(instance.objects).toEqual([]);
-				expect(instance.tags).toEqual([]);
+					const instance = new SSRAssetsContainer('env');
 
-				instance.add([], []);
-			});
+					expect(instance.env).toBe('env');
+					expect(instance.isReadOnly).toBe(false);
+					expect(instance.objects).toEqual([]);
+					expect(instance.tags).toEqual([]);
 
-			it('should create read-only instance', () => {
-
-				const instance = new SSRAssetsContainer('env', true);
-
-				expect(instance.env).toBe('env');
-				expect(instance.isReadOnly).toBe(true);
-				expect(instance.objects).toEqual([]);
-				expect(instance.tags).toEqual([]);
-
-				expect(() => {
-					instance.add([], []);
-				}).toThrowError(/read-only/);
-			});
-
-			it('should create instance from JS object', () => {
-
-				const instance = SSRAssetsContainer.fromJS('env', {
-					objects,
-					tags
+					instance.set([], []);
 				});
 
-				expect(instance.env).toBe('env');
-				expect(instance.isReadOnly).toBe(true);
-				expect(instance.objects).toEqual(objects);
-				expect(instance.tags).toEqual(tags);
-			});
-		});
+				it('should create read-only instance', () => {
 
-		describe('#getObjects', () => {
+					const instance = new SSRAssetsContainer('env', true);
 
-			it('should return objects', () => {
+					expect(instance.env).toBe('env');
+					expect(instance.isReadOnly).toBe(true);
+					expect(instance.objects).toEqual([]);
+					expect(instance.tags).toEqual([]);
 
-				const objectsFromInstance = instance.getObjects();
+					expect(() => {
+						instance.set([], []);
+					}).toThrowError(/read-only/);
+				});
 
-				expect(objectsFromInstance).not.toBe(objects);
-				expect(objectsFromInstance).toEqual(objects);
-			});
-		});
+				it('should create instance from JS object', () => {
 
-		describe('#getTags', () => {
+					const instance = SSRAssetsContainer.fromJS('env', {
+						objects,
+						tags
+					});
 
-			it('should return tags', () => {
-
-				const tagsFromInstance = instance.getTags();
-
-				expect(tagsFromInstance).not.toBe(tags);
-				expect(tagsFromInstance).toEqual(tags);
-			});
-		});
-
-		describe('#toHtml', () => {
-
-			it('should return HTML', () => {
-
-				expect(
-					instance.toHtml()
-				).toBe('<a><b><i>');
+					expect(instance.env).toBe('env');
+					expect(instance.isReadOnly).toBe(true);
+					expect(instance.objects).toEqual(objects);
+					expect(instance.tags).toEqual(tags);
+				});
 			});
 
-			it('should return beautified HTML', () => {
+			describe('#getObjects', () => {
 
-				expect(
-					instance.toHtml(true)
-				).toBe('<a>\n<b>\n<i>');
+				it('should return objects', () => {
+
+					const objectsFromInstance = instance.getObjects();
+
+					expect(objectsFromInstance).not.toBe(objects);
+					expect(objectsFromInstance).toEqual(objects);
+				});
 			});
-		});
 
-		describe('#toString', () => {
+			describe('#getTags', () => {
 
-			it('should return HTML string', () => {
+				it('should return tags', () => {
 
-				expect(
-					instance.toString()
-				).toBe('<a><b><i>');
+					const tagsFromInstance = instance.getTags();
+
+					expect(tagsFromInstance).not.toBe(tags);
+					expect(tagsFromInstance).toEqual(tags);
+				});
 			});
-		});
 
-		describe('#toJS', () => {
+			describe('#toHtml', () => {
 
-			it('should return JS object', () => {
+				it('should return HTML', () => {
 
-				expect(
-					instance.toJS()
-				).toEqual({
-					objects,
-					tags
+					expect(
+						instance.toHtml()
+					).toBe('<a><b><i>');
+				});
+
+				it('should return beautified HTML', () => {
+
+					expect(
+						instance.toHtml(true)
+					).toBe('<a>\n<b>\n<i>');
+				});
+			});
+
+			describe('#toString', () => {
+
+				it('should return HTML string', () => {
+
+					expect(
+						instance.toString()
+					).toBe('<a><b><i>');
+				});
+			});
+
+			describe('#toJS', () => {
+
+				it('should return JS object', () => {
+
+					expect(
+						instance.toJS()
+					).toEqual({
+						objects,
+						tags
+					});
 				});
 			});
 		});
