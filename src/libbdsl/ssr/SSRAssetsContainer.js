@@ -124,8 +124,8 @@ export class SSRAssetsContainer {
 	 */
 	toJS() {
 		return {
-			objects: this.objects,
-			tags:    this.tags
+			objects: this.objects.map(obj => ({ ...obj })),
+			tags:    [...this.tags]
 		};
 	}
 }
