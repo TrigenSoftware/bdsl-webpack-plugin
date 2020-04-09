@@ -12,10 +12,12 @@ export class SSRAssetsMatcher {
 	/**
 	 * SSR Assets Matcher.
 	 * @param {object} options - Options to create matcher.
-	 * @param {string} options.assetsFile - Path to JSON file with assets info.
+	 * @param {object} [assets] - Assets collection object.
+	 * @param {string} [options.assetsFile] - Path to JSON file with assets info.
 	 * @param {object} [options.fs] - NodeJS's FS compatible module.
 	 */
 	constructor({
+		assets,
 		assetsFile,
 		fs = realFs
 	}) {
@@ -23,36 +25,52 @@ export class SSRAssetsMatcher {
 		/**
 		 * @type {Map<string, RegExp>}
 		 */
-		this.envs = new Map();
+		this.envsMap = new Map();
+
+		/**
+		 * @type {string}
+		 */
+		this.defaultEnv = null;
 
 		/**
 		 * @type {Map<string, SSRAssetsContainer>}
 		 */
-		this.containers = new Map();
+		this.containersMap = new Map();
 
-		this.readAssetsCollection(fs, assetsFile);
+		if (assets) {
+			this.parseAssetsCollection(assets);
+		} else {
+			this.readAssetsCollection(fs, assetsFile);
+		}
+	}
+
+	parseAssetsCollection({
+		matchers,
+		assets
+	}) {
+
+		const {
+			envsMap,
+			containersMap
+		} = this;
+
+		this.defaultEnv = Object.keys(matchers).pop();
+
+		Object.entries(matchers).forEach(([env, regExp]) => {
+			envsMap.set(env, new RegExp(regExp));
+		});
+
+		Object.entries(assets).forEach(([env, container]) => {
+			containersMap.set(env, SSRAssetsContainer.fromJS(env, container));
+		});
 	}
 
 	readAssetsCollection(fs, assetsFile) {
 
-		const {
-			envs,
-			containers
-		} = this;
 		const file = fs.readFileSync(assetsFile, 'utf8');
 		const collection = JSON.parse(file);
-		const {
-			matchers,
-			assets
-		} = collection;
 
-		Object.entries(matchers).forEach(([env, regExp]) => {
-			envs.set(env, new RegExp(regExp));
-		});
-
-		Object.entries(assets).forEach(([env, container]) => {
-			containers.set(env, SSRAssetsContainer.fromJS(env, container));
-		});
+		this.parseAssetsCollection(collection);
 	}
 
 	/**
@@ -63,18 +81,19 @@ export class SSRAssetsMatcher {
 	match(userAgent) {
 
 		const {
-			envs,
-			containers
+			envsMap,
+			defaultEnv,
+			containersMap
 		} = this;
-		const matchers = envs.entries();
+		const matchers = envsMap.entries();
 
 		for (const [env, regExp] of matchers) {
 
 			if (regExp.test(userAgent)) {
-				return containers.get(env);
+				return containersMap.get(env);
 			}
 		}
 
-		return null;
+		return containersMap.get(defaultEnv);
 	}
 }

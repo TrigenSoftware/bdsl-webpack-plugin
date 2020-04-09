@@ -188,7 +188,7 @@ export class SSRAssetsCollector {
 		} = this;
 		const matchers = Array.from(envsMap.entries()).reduce((matchers, [env, regExp]) => ({
 			...matchers,
-			[env]: regExp.toString().replace(/^\/|\/$/, '')
+			[env]: regExp.toString().replace(/^\/|\/$/g, '')
 		}), {});
 		const assets = Array.from(containersMap.entries()).reduce((assets, [env, container]) => ({
 			...assets,
