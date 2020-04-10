@@ -69,7 +69,7 @@ export default class BdslWebpackPlugin extends BdslWebpackPluginBase {
 		outputName,
 		headTags,
 		head = headTags
-	}, done) {
+	}) {
 
 		const {
 			options,
@@ -83,7 +83,6 @@ export default class BdslWebpackPlugin extends BdslWebpackPluginBase {
 		builder.setEnvElements(env, currentElements);
 
 		if (!builder.isFilled()) {
-			done();
 			return;
 		}
 
@@ -114,7 +113,6 @@ export default class BdslWebpackPlugin extends BdslWebpackPluginBase {
 		});
 
 		this.releaseBuilder();
-		done();
 	}
 
 	filterAssets(compilation) {

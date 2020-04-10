@@ -23,7 +23,8 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 	 *                                                                 or higher than the one specified in browserslist.
 	 * @param {boolean}           [options.allowZeroSubverions=true] - Ignore match of patch or patch and minor, if they are 0.
 	 * @param {boolean}           [options.withStylesheets=false] - Enable differential stylesheets loading.
-	 * @param {boolean}           [options.replaceTagsWithPlaceholder] - Replace script/link tags in HTML-file to `<ssr-placeholder>`.
+	 * @param {boolean}           [options.replaceTagsWithPlaceholder] - Replace script/link tags in HTML-file to
+	 *                                                                   `<ssr-placeholder></ssr-placeholder>`.
 	 */
 	constructor(options = {}) {
 
@@ -63,7 +64,7 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 		}
 
 		this.tapAssetsHook(compiler, identifier, this.collectAssets);
-		compiler.hooks.emit.tapAsync(identifier, this.emitAssetsCollection);
+		compiler.hooks.emit.tapPromise(identifier, this.emitAssetsCollection);
 	}
 
 	collectAssets({
@@ -71,7 +72,7 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 		outputName,
 		headTags,
 		head = headTags
-	}, done) {
+	}) {
 
 		const {
 			options,
@@ -90,7 +91,7 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 		collector.setEnvAssets(env, currentElements, currentElementsTags);
 
 		if (!collector.isFilled()) {
-			done();
+			this.resolveAssetsCollected(null);
 			return;
 		}
 
@@ -114,30 +115,29 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 			});
 		}
 
-		const assetsCollection = collector.toJSON();
+		const assetsCollection = collector.toJson();
 
 		this.resolveAssetsCollected(assetsCollection);
 		this.releaseCollector();
-		done();
 	}
 
-	async emitAssetsCollection(compiler, done) {
+	async emitAssetsCollection(compiler) {
 
 		const {
 			filename = 'ssr-bdsl-assets.json'
 		} = this.options;
 		const assetsCollection = await this.assetsCollected;
 
-		compiler.assets[filename] = {
-			source() {
-				return assetsCollection;
-			},
-			size() {
-				return assetsCollection.length;
-			}
-		};
-
-		done();
+		if (assetsCollection) {
+			compiler.assets[filename] = {
+				source() {
+					return assetsCollection;
+				},
+				size() {
+					return assetsCollection.length;
+				}
+			};
+		}
 	}
 
 	filterAssets(compilation) {

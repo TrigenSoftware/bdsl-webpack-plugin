@@ -56,12 +56,12 @@ export default class BdslWebpackPluginBase {
 		compiler.hooks.compilation.tap(identifier, (compilation) => {
 
 			if (HtmlPlugin.getHooks) {
-				HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapAsync(
+				HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
 					identifier,
 					handler
 				);
 			} else {
-				compilation.hooks.htmlWebpackPluginAlterAssetTags.tapAsync(
+				compilation.hooks.htmlWebpackPluginAlterAssetTags.tap(
 					identifier,
 					handler
 				);
@@ -143,9 +143,9 @@ export default class BdslWebpackPluginBase {
 	createHtmlTag(plugin, element) {
 
 		if (typeof plugin.prepareAssetTagGroupForRendering === 'function') {
-			return plugin.prepareAssetTagGroupForRendering([element]);
+			return plugin.prepareAssetTagGroupForRendering([element]).toString();
 		}
 
-		return plugin.createHtmlTag(element);
+		return plugin.createHtmlTag(element).toString();
 	}
 }
