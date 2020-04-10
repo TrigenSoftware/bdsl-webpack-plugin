@@ -129,7 +129,7 @@ module.exports = [
         <title>Example</title>
         <script>function dsl(a,s,c,l,i){c=dsld.createElement('script');c.async=a[0];c.src=s;l=a.length;for(i=1;i<l;i++)c.setAttribute(a[i][0],a[i][1]);dslf.appendChild(c)}var dsld=document,dslf=dsld.createDocumentFragment(),dslu=navigator.userAgent,dsla=[[]];if(/((CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS)[ +]+(13[_\.]0|13[_\.]([1-9]|\d{2,})|(1[4-9]|[2-9]\d|\d{3,})[_\.]\d+)(?:[_\.]\d+)?)|(SamsungBrowser\/(9\.2|9\.([3-9]|\d{2,})|([1-9]\d|\d{3,})\.\d+|10\.1|10\.([2-9]|\d{2,})|(1[1-9]|[2-9]\d|\d{3,})\.\d+))|(Edge\/(79|([8-9]\d|\d{3,}))(?:\.\d+)?)|(HeadlessChrome((?:\/79\.\d+\.\d+)?|(?:\/([8-9]\d|\d{3,})\.\d+\.\d+)?))|((Chromium|Chrome)\/(79|([8-9]\d|\d{3,}))\.\d+(?:\.\d+)?)|(Version\/(13|(1[4-9]|[2-9]\d|\d{3,}))\.\d+(?:\.\d+)?.*Safari\/)|(Firefox\/(68|(69|[7-9]\d|\d{3,})|71|(7[2-9]|[8-9]\d|\d{3,}))\.\d+\.\d+)|(Firefox\/(68|(69|[7-9]\d|\d{3,})|71|(7[2-9]|[8-9]\d|\d{3,}))\.\d+(pre|[ab]\d+[a-z]*)?)/.test(dslu))dsl(dsla[0],"/index.modern.js")
 else if(/((CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS)[ +]+(11[_\.]3|11[_\.]([4-9]|\d{2,})|(1[2-9]|[2-9]\d|\d{3,})[_\.]\d+|12[_\.]0|12[_\.]([1-9]|\d{2,})|12[_\.]4|12[_\.]([5-9]|\d{2,})|(1[3-9]|[2-9]\d|\d{3,})[_\.]\d+)(?:[_\.]\d+)?)|(SamsungBrowser\/(7\.2|7\.([3-9]|\d{2,})|7\.4|7\.([5-9]|\d{2,})|([8-9]|\d{2,})\.\d+|8\.2|8\.([3-9]|\d{2,})|(9|\d{2,})\.\d+))|(Edge\/(17|(1[8-9]|[2-9]\d|\d{3,}))(?:\.\d+)?)|(HeadlessChrome((?:\/65\.\d+\.\d+)?|(?:\/(6[6-9]|[7-9]\d|\d{3,})\.\d+\.\d+)?))|((Chromium|Chrome)\/(65|(6[6-9]|[7-9]\d|\d{3,}))\.\d+(?:\.\d+)?([\d.]+$|.*Safari\/(?![\d.]+ Edge\/[\d.]+$)))|(Version\/(11\.1|11\.([2-9]|\d{2,})|(1[2-9]|[2-9]\d|\d{3,})\.\d+|12\.0|12\.([1-9]|\d{2,})|(1[3-9]|[2-9]\d|\d{3,})\.\d+)(?:\.\d+)?.*Safari\/)|(Firefox\/(59|([6-9]\d|\d{3,}))\.\d+\.\d+)|(Firefox\/(59|([6-9]\d|\d{3,}))\.\d+(pre|[ab]\d+[a-z]*)?)/.test(dslu))dsl(dsla[0],"/index.actual.js")
-else dsl(dsla[0],"/index.old.js");dsld.all[1].appendChild(dslf)</script>
+else dsl(dsla[0],"/index.legacy.js");dsld.all[1].appendChild(dslf)</script>
     </head>
     <body></body>
 </html>
@@ -150,7 +150,7 @@ yarn add -D bdsl-webpack-plugin
 1) `bdsl-webpack-plugin` captures scripts only from `<head>` section, so with `html-webpack-plugin` you should use `inject: 'head'` option;
 2) By default scripts are loaded [asynchronously](https://javascript.info/script-async-defer#dynamic-scripts) and executed in "as they defined" order. To execute script in "load-first" order you should add [`async`](https://javascript.info/script-async-defer#async) attribute to `<script>` tag. For that you can use [`script-ext-html-webpack-plugin`](https://github.com/numical/script-ext-html-webpack-plugin);
 3) `defer` scripts are not supported, so you can use libraries like [`when-dom-ready`](https://www.npmjs.com/package/when-dom-ready) to bootstrap code when `DOM` ready;
-4) Webpack configs must be in modern to old browser order, e.g. `['modern', 'actual', 'old']`;
+4) Webpack configs must be in modern to legacy browser order, e.g. `['modern', 'actual', 'legacy']`;
 5) `bdsl-webpack-plugin` also defines `process.env.BDSL_ENV` variable with bundle's environment.
 
 ## Why?
@@ -178,6 +178,7 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 - [Differential stylesheet loading](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/postcss-preset-env/)
 - [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/)
 - [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/)
+- [Differential serving with `SsrBdslWebpackPlugin`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/SsrBdslWebpackPlugin/)
 - [JS API with `@loadable/server`](https://github.com/TrigenSoftware/DevFest-Siberia/blob/5f69fd81361896a6ca77256cb04dbea1e6842b30/src/App/render.tsx#L159)
 
 ## Metrics

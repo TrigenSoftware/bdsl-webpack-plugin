@@ -97,4 +97,31 @@ describe('bdsl-webpack-plugin', () => {
 			expect.stringMatching(/'noModule' in dsld\.createElement\('script'\)/)
 		);
 	});
+
+	it('should emit html file with placeholder and assets collection file', async () => {
+
+		restoreContext = setExampleContext('SsrBdslWebpackPlugin');
+
+		await compile();
+
+		const html = fs.readFileSync(
+			path.join(pathToArtifacts, 'index.html'),
+			'utf8'
+		);
+		const assets = JSON.parse(
+			fs.readFileSync(
+				path.join(pathToArtifacts, 'ssr-bdsl-assets.json'),
+				'utf8'
+			)
+		);
+
+		expect(html.split('<script>').length).toEqual(1);
+		expect(html).toEqual(
+			expect.stringMatching(/<ssr-placeholder>/)
+		);
+		expect(Object.keys(assets)).toEqual([
+			'matchers',
+			'assets'
+		]);
+	});
 });

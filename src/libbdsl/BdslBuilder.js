@@ -125,7 +125,7 @@ export class BdslBuilder {
 	}
 
 	/**
-	 * Add environment scripts.
+	 * Add environment.
 	 * @param  {object}                                 options - browserslist-useragent-regexp options.
 	 * @param  {boolean}                                [options.isModule] - Use `type=module` support check instead of RegExp.
 	 * @param  {string | string[]}                      [options.browsers] - Manually provide a browserslist query (or an array of queries).
@@ -144,8 +144,7 @@ export class BdslBuilder {
 
 		const {
 			commonOptions,
-			testersMap,
-			elementsMap
+			testersMap
 		} = this;
 		const {
 			isModule
@@ -165,7 +164,7 @@ export class BdslBuilder {
 		}
 
 		if (elements) {
-			elementsMap.set(env, elementsFromJSX(elements));
+			this.setEnvElements(env, elements);
 		}
 
 		return env;

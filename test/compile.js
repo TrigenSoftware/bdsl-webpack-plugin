@@ -12,12 +12,12 @@ export const pathToArtifacts = path.resolve(__dirname, 'artifacts');
 const filenames = {
 	2: [
 		'esm',
-		'old'
+		'legacy'
 	],
 	3: [
 		'modern',
 		'actual',
-		'old'
+		'legacy'
 	]
 };
 
