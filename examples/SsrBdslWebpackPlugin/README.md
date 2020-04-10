@@ -160,7 +160,7 @@ Assets to browser matcher.
 | options | `object` | — | Options to create matcher. |
 | options.assets | `object` | — | Assets collection object. |
 | options.assetsFile | `string` | — | Path to JSON file with assets collection. |
-| options.fs | `object` | — | NodeJS's FS compatible module. |
+| options.fs | `object` | `require('fs')` | NodeJS's FS compatible module. |
 
 #### match(userAgent)
 
