@@ -24,7 +24,7 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 	 * @param {boolean}           [options.allowZeroSubverions=true] - Ignore match of patch or patch and minor, if they are 0.
 	 * @param {boolean}           [options.withStylesheets=false] - Enable differential stylesheets loading.
 	 * @param {boolean}           [options.replaceTagsWithPlaceholder=false] - Replace script/link tags in HTML-file to
-	 *                                                                   `<ssr-placeholder></ssr-placeholder>`.
+	 *                                                                         `<ssr-placeholder></ssr-placeholder>`.
 	 */
 	constructor(options = {}) {
 
