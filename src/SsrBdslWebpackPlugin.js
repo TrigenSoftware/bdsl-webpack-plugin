@@ -98,9 +98,9 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 		if (replaceTagsWithPlaceholder) {
 
 			const placeholder = {
-				tagName:   'ssr-placeholder',
-				voidTag:   true,
-				closeTag:  false
+				tagName:  'ssr-placeholder',
+				voidTag:  true,
+				closeTag: false
 			};
 
 			currentElements.forEach((element, i) => {
