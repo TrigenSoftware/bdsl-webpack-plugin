@@ -77,33 +77,33 @@ export class SSRAssetsContainer {
 	}
 
 	/**
-	 * Get HTML elements objects.
-	 * @return {HTMLElementObject[]} HTML elements objects.
+	 * Get HTM-elements objects.
+	 * @return {HTMLElementObject[]} HTML-elements objects.
 	 */
 	getObjects() {
 		return this.objects;
 	}
 
 	/**
-	 * Get HTML elements strings.
-	 * @return {string[]} HTML elements strings.
+	 * Get HTML-elements tags strings.
+	 * @return {string[]} HTML-elements tags strings.
 	 */
 	getTags() {
 		return this.tags;
 	}
 
 	/**
-	 * Get HTML elements string from container.
+	 * Get HTML-elements string from container.
 	 * @param  {boolean} [beautify=false] - Beautify output.
-	 * @return {string} HTML elements string.
+	 * @return {string} HTML-elements string.
 	 */
 	toHtml(beautify = false) {
 		return this.tags.join(beautify ? '\n' : '');
 	}
 
 	/**
-	 * Get HTML elements string from container.
-	 * @return {string} HTML elements string.
+	 * Get HTML-elements string from container.
+	 * @return {string} HTML-elements string.
 	 */
 	toString() {
 		return this.toHtml();

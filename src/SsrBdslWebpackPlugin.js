@@ -13,7 +13,7 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 	/**
 	 * Browserslist Differential Script Loading webpack plugin for SSR.
 	 * @param {object}            [options] - Plugin options.
-	 * @param {string}            [options.filename] - Assets collection JSON file name.
+	 * @param {string}            [options.filename='ssr-bdsl-assets.json'] - Assets collection JSON file name.
 	 * @param {string}            [options.groupId='default'] - Plugins group id.
 	 * @param {string | string[]} [options.browsers] - Manually provide a browserslist query (or an array of queries).
 	 * @param {string}            [options.env] - Pick the config belonging to this environment.
@@ -23,7 +23,7 @@ export default class SsrBdslWebpackPlugin extends BdslWebpackPluginBase {
 	 *                                                                 or higher than the one specified in browserslist.
 	 * @param {boolean}           [options.allowZeroSubverions=true] - Ignore match of patch or patch and minor, if they are 0.
 	 * @param {boolean}           [options.withStylesheets=false] - Enable differential stylesheets loading.
-	 * @param {boolean}           [options.replaceTagsWithPlaceholder] - Replace script/link tags in HTML-file to
+	 * @param {boolean}           [options.replaceTagsWithPlaceholder=false] - Replace script/link tags in HTML-file to
 	 *                                                                   `<ssr-placeholder></ssr-placeholder>`.
 	 */
 	constructor(options = {}) {

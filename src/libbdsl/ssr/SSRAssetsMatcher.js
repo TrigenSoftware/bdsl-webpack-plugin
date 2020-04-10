@@ -5,15 +5,15 @@ import {
 } from './SSRAssetsContainer';
 
 /**
- * SSR Assets Matcher.
+ * Assets to browser matcher.
  */
 export class SSRAssetsMatcher {
 
 	/**
-	 * SSR Assets Matcher.
+	 * Assets to browser matcher.
 	 * @param {object} options - Options to create matcher.
-	 * @param {object} [assets] - Assets collection object.
-	 * @param {string} [options.assetsFile] - Path to JSON file with assets info.
+	 * @param {object} [options.assets] - Assets collection object.
+	 * @param {string} [options.assetsFile] - Path to JSON file with assets collection.
 	 * @param {object} [options.fs] - NodeJS's FS compatible module.
 	 */
 	constructor({
