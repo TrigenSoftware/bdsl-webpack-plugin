@@ -157,10 +157,10 @@ Assets to browser matcher.
 
 | Argument | Type | Default | Description |
 |----------|------|---------|-------------|
-| options | `object` | - | Options to create matcher. |
+| options | `object` | — | Options to create matcher. |
 | options.assets | `object` | — | Assets collection object. |
 | options.assetsFile | `string` | — | Path to JSON file with assets collection. |
-| options.fs | `object` | - | NodeJS's FS compatible module. |
+| options.fs | `object` | — | NodeJS's FS compatible module. |
 
 #### match(userAgent)
 
@@ -168,7 +168,7 @@ Get assets for browser by useragent.
 
 | Argument | Type | Default | Description |
 |----------|------|---------|-------------|
-| userAgent | `string` | - | UserAgent to match assets. |
+| userAgent | `string` | — | UserAgent to match assets. |
 
 Returns [`SSRAssetsContainer`](#class-ssrassetscontainer).
 
