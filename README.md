@@ -183,7 +183,7 @@ Read docs [here](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/mast
 - [Transpile dependencies](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/transpile-dependencies/)
 - [`unsafeUseDocumentWrite` option](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/document-write/)
 - [Differential serving with `SsrBdslWebpackPlugin`](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/SsrBdslWebpackPlugin/)
-- [JS API with `@loadable/server`](https://github.com/TrigenSoftware/DevFest-Siberia/blob/5f69fd81361896a6ca77256cb04dbea1e6842b30/src/App/render.tsx#L159)
+- [`BdslBuilder` API with `@loadable/server`](https://github.com/TrigenSoftware/DevFest-Siberia/blob/5f69fd81361896a6ca77256cb04dbea1e6842b30/src/App/render.tsx#L159)
 
 ## Metrics
 
