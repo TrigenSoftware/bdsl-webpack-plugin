@@ -47,3 +47,17 @@ export function elementsFromJSX(elements) {
 			: element
 	));
 }
+
+/**
+ * Paste Browserslist environment name into filename template.
+ * @param  {string} template - Filename template with `[env]` placeholder.
+ * @param  {string} browserslistEnv - Environment name to paste.
+ * @return {string} Filename.
+ */
+export function pasteBrowserslistEnv(template, browserslistEnv) {
+	return template.replace(/(\.|-)?\[env\]/, (
+		browserslistEnv
+			? `$1${browserslistEnv}`
+			: ''
+	));
+}

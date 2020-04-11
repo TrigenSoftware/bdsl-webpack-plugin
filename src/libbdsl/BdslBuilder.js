@@ -171,7 +171,7 @@ export class BdslBuilder {
 	}
 
 	/**
-	 * Set environment scripts.
+	 * Set environment elements.
 	 * @param  {string|object}                          optionsOrEnv - Env name or browserslist-useragent-regexp options.
 	 * @param  {(HTMLElementObject|JSXElementObject)[]} elements - script/style elements.
 	 * @return {string} Environment name.
@@ -189,7 +189,7 @@ export class BdslBuilder {
 	}
 
 	/**
-	 * Build dsl script.
+	 * Build DSL script.
 	 * @param  {object}  [options] - Build options.
 	 * @param  {boolean} [options.unsafeUseDocumentWrite=false] - Use `document.write()` to inject `<script>`.
 	 *                                                            This variant supports `defer` scripts,

@@ -171,6 +171,10 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 | withStylesheets | `boolean` | `false` | Enable differential stylesheets loading. |
 | unsafeUseDocumentWrite | `boolean` | `false` | Use `document.write()` to inject `<script>`. This variant supports `defer` scripts, [but some browsers can restrict `document.write()` calls](https://developers.google.com/web/updates/2016/08/removing-document-write). |
 
+## JS API
+
+Read docs [here](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/JS-API.md).
+
 ## Examples
 
 - [Basic](https://github.com/TrigenSoftware/bdsl-webpack-plugin/blob/master/examples/basic/)

@@ -1,6 +1,7 @@
 import {
 	getEnvName,
-	elementsFromJSX
+	elementsFromJSX,
+	pasteBrowserslistEnv
 } from '../src';
 
 describe('bdsl-webpack-plugin', () => {
@@ -122,6 +123,51 @@ describe('bdsl-webpack-plugin', () => {
 					resultElements[1]
 				).toBe(
 					element
+				);
+			});
+		});
+
+		describe('pasteBrowserslistEnv', () => {
+
+			it('should replace env', () => {
+
+				expect(
+					pasteBrowserslistEnv('file[env].ext', 'modern')
+				).toBe(
+					'filemodern.ext'
+				);
+				expect(
+					pasteBrowserslistEnv('file[env].ext', undefined)
+				).toBe(
+					'file.ext'
+				);
+			});
+
+			it('should replace env with dash', () => {
+
+				expect(
+					pasteBrowserslistEnv('file-[env].ext', 'modern')
+				).toBe(
+					'file-modern.ext'
+				);
+				expect(
+					pasteBrowserslistEnv('file-[env].ext', undefined)
+				).toBe(
+					'file.ext'
+				);
+			});
+
+			it('should replace env around dots', () => {
+
+				expect(
+					pasteBrowserslistEnv('file.[env].ext', 'modern')
+				).toBe(
+					'file.modern.ext'
+				);
+				expect(
+					pasteBrowserslistEnv('file.[env].ext', undefined)
+				).toBe(
+					'file.ext'
 				);
 			});
 		});
