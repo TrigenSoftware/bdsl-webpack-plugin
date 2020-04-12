@@ -24,6 +24,11 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [1.4.0-beta] - 2020-04-12
+### Added
+- `SsrBdslWebpackPlugin` for differential serving implementation;
+- JS API docs.
+
 ## [1.3.0-beta] - 2020-03-21
 ### Added
 - `isModule` option: use `type=module` support check instead of RegExp;
