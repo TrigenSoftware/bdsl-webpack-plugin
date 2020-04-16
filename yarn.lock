@@ -2372,15 +2372,15 @@ browserslist-config-trigen@^1.1.0:
   integrity sha512-V2UUIItqwVkXhFHEyIemio0LCmIe32KgJwcpRErQzwo2U3pgewiE2VA4nrEev+c9tw5yd7PnDYAwLKfT2wnc/g==
 
 browserslist-useragent-regexp@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/browserslist-useragent-regexp/-/browserslist-useragent-regexp-2.0.1.tgz#d344ca302672f1b9bc6834ab87316dabffe472bd"
-  integrity sha512-z4IJQwIp8GxnCOe+KrwZusnw91nUB/iIIJd/fHN/EubuEInIi0v0q3yPUK37mx/078Z/jYxlp9d6DH6+HZmfbA==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/browserslist-useragent-regexp/-/browserslist-useragent-regexp-2.0.2.tgz#9cb3df9e8fd1fca5685f27815f108fe42834037c"
+  integrity sha512-wKcuONb00C/w/hHXY9jYD37iLj/M4ZANYuSy9V3TfbR8S/juJc0NaWbgTMXp2ylG1TIe0ckWuEQv4s6hfgJR+g==
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@types/node" "^13.1.1"
     argue-cli "^1.2.0"
     browserslist "^4.5.6"
-    chalk "^3.0.0"
+    chalk "^4.0.0"
     core-js "3"
     easy-table "^1.1.1"
     useragent "^2.3.0"
