@@ -2388,9 +2388,9 @@ browserslist-config-trigen@^1.1.0:
   integrity sha512-V2UUIItqwVkXhFHEyIemio0LCmIe32KgJwcpRErQzwo2U3pgewiE2VA4nrEev+c9tw5yd7PnDYAwLKfT2wnc/g==
 
 browserslist-useragent-regexp@^2.0.1:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/browserslist-useragent-regexp/-/browserslist-useragent-regexp-2.0.2.tgz#9cb3df9e8fd1fca5685f27815f108fe42834037c"
-  integrity sha512-wKcuONb00C/w/hHXY9jYD37iLj/M4ZANYuSy9V3TfbR8S/juJc0NaWbgTMXp2ylG1TIe0ckWuEQv4s6hfgJR+g==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/browserslist-useragent-regexp/-/browserslist-useragent-regexp-2.0.4.tgz#82a6937324f6c8425755d236ef27cd2fe1df9d69"
+  integrity sha512-euoaRIdY/bS5GiRMEIgybkoySAUPf/5hOJVsyNDJnoj/0KnicJo2KUE8oU02WbNW/4FOkdIQGEx7JL7R49VLKQ==
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@types/node" "^13.1.1"
