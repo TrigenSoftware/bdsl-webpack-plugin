@@ -1332,11 +1332,12 @@
     rollup-plugin-babel "^4.0.3"
 
 "@trigen/scripts-plugin-size-limit@5":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-size-limit/-/scripts-plugin-size-limit-5.1.0.tgz#27aa9a124a888d191f5e40ff571b5d93630c8d78"
-  integrity sha512-1oJHER/fPxF5VO0onq7zw8eLNWADNsHf3o8kq8J/JBWXZWHvEz5edu4slQfbHvHsW0G8zS++HHyr0kCiSijbMg==
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-size-limit/-/scripts-plugin-size-limit-5.5.0.tgz#56bf34ccfd2192782b5207c7c8ad3d7ffbb9aed0"
+  integrity sha512-RIdwEji4zjR1AbynIAj33UPHfeNWab51SatfRXCTjhoFUpcr+3yq9rRtFWBbN9TvlXZjKn6F8iYhE1Bsn/D+Ag==
   dependencies:
-    "@trigen/scripts" "^5.1.0"
+    "@babel/runtime-corejs3" "^7.9.6"
+    "@trigen/scripts" "^5.5.0"
     size-limit "^4.1.1"
 
 "@trigen/scripts-preset-lib@5":
