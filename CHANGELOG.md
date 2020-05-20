@@ -24,6 +24,10 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [1.5.0-beta] - 2020-05-21
+### Changed
+- Dependencies update.
+
 ## [1.4.0-beta] - 2020-04-12
 ### Added
 - `SsrBdslWebpackPlugin` for differential serving implementation;
