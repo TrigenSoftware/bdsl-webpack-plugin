@@ -3,13 +3,15 @@ import {
 	Point
 } from 'canvg';
 
+// Import polyfills:
+Promise;
+
 export class TestClass {
 
 	static env = process.env.BDSL_ENV;
 
 	userAgent = navigator.userAgent;
-	point = new Point('1,2');
-	pr = Promise.resolve();
+	point = Point.parse('1,2');
 
 	async asyncMethod() {
 		return Math.random();

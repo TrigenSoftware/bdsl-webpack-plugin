@@ -1,6 +1,9 @@
 import whenDomReady from 'when-dom-ready';
 import './style.css';
 
+// Import polyfills:
+Promise;
+
 export class TestClass {
 
 	static env = process.env.BDSL_ENV;

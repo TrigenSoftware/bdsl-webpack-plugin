@@ -63,7 +63,11 @@ function createWebpackConfig(browsersOrEnv) {
 					plugins:        [
 						'@babel/plugin-proposal-class-properties',
 						'@babel/plugin-proposal-async-generator-functions',
-						'@babel/plugin-transform-runtime'
+						['@babel/plugin-transform-runtime', {
+							useESModules: true,
+							regenerator: true,
+							corejs: false,
+						}]
 					]
 				}
 			}]
