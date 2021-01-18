@@ -170,6 +170,7 @@ There is a differential script loading with [module/nomodule trick](https://dev.
 | allowZeroSubverions | `boolean` | `true` | Ignore match of patch or patch and minor, if they are 0. |
 | withStylesheets | `boolean` | `false` | Enable differential stylesheets loading. |
 | unsafeUseDocumentWrite | `boolean` | `false` | Use `document.write()` to inject `<script>`. This variant supports `defer` scripts, [but some browsers can restrict `document.write()` calls](https://developers.google.com/web/updates/2016/08/removing-document-write). |
+| debug | `boolean` | `process.env.NODE_ENV !== 'production'` | Print debug info. |
 
 ## JS API
 
