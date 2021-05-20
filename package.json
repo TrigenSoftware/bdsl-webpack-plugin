@@ -59,7 +59,7 @@
     "@trigen/scripts-preset-lib": "^6.0.0",
     "babel-loader": "^8.0.6",
     "canvg": "^3.0.5",
-    "css-loader": "^3.5.3",
+    "css-loader": "^5.2.5",
     "eslint-plugin-jest": "^23.7.0",
     "express": "^4.17.1",
     "html-webpack-plugin": "^4.0.1",
